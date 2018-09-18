@@ -1,0 +1,3192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta content="IE=EmulateIE9" http-equiv="X-UA-Compatible"> -->
+
+
+<link href="/dev/jcar/static/plus/css/common.css" type="text/css" rel="stylesheet" />
+<link href="/dev/jcar/static/plus/css/common-fix.css" type="text/css" rel="stylesheet" />
+
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/dev/jcar/static/common/js/common.js"></script>
+<script type="text/javascript" src="/dev/jcar/static/common/js/dateutil.js"></script>
+<script type="text/javascript" src="/dev/jcar/static/plus/js/plus.js"></script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-73712343-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-73712343-1');
+</script>
+
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dbf7bff791b1c8818f622106b181c387&libraries=services,clusterer"></script>
+<script type="text/javascript" src="/dev/jcar/static/evcharger/js/evcharger.js"></script>
+<script type="text/javascript" src="/dev/jcar/static/common/exlib/polyline/polyline.js"></script>
+<script type="text/javascript" src="/dev/jcar/static/common/exlib/simplify/simplify.js"></script>
+
+
+</head>
+<body class="status-loading">
+  <div id="wrap" class="loading">
+    <div class="loading_txt">새로운 EV 충전습관</div>
+    <div class="login_logo"><img src="/dev/jcar/static/plus/image/login_logo.png"></div>
+  </div><!--/wrap-->
+
+  <div class="popup_noti">
+    <div class="wrap_txt"><div class="txt"></div></div>
+    <div class="btnbox">
+      <div class="btn-cancel"><a href="#" class="btn_popup">취소</a></div>
+      <div class="btn-ok"><a href="#" class="btn_popup_r">확인</a></div>
+    </div>
+  </div>
+  <div class="black"></div>
+
+
+<div id="wrap_navi">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:" class="button-sidebar-close"><img src="/dev/jcar/static/plus/image/icon_close.png"></a></li>
+      <li class="tit"></li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="navi_id">
+    <div class="id on-login">
+      <div class="fl"><img src="/dev/jcar/static/plus/image/id_blank.png"></div>
+      <div class="fl"><span class="txt_name"></span><br/><span class="txt_level">정회원 Silver</span></div>
+      <div class="clb"></div>
+    </div>
+    <div class="id on-logout">
+      <div style="padding:0 0 20px 20px;"><a href="javascript:" class="button-login-page btn_login_small">로그인</a><br/><a href="join.html" class="txt_join">아직 회원이 아니신가요?</a></div>
+    </div>
+  </div>
+  <div class="navi">
+    <ul>
+      <a href="javascript:" class="button-usage-history"><li><span class="ml20">이용기록</span></li></a>
+      <a href="javascript:JecarPlusPage.load('guide')" class="button-guide"><li><span class="ml20">이용안내</span></li></a>
+      <a href="javascript:JecarPlusPage.load('customer-support')"><li><span class="ml20">고객센터</span></li></a>
+      <a href="javascript:" class="button-user-info"><li><span class="ml20">회원정보수정</span></li></a>
+      <a href="javascript:" class="button-logout"><li><span class="ml20">로그아웃</span></li></a>
+    </ul>
+    <div class="naviicon">
+      <div class="left"><a href="javascript:" class="button-creditcard"><img src="/dev/jcar/static/plus/image/icon_card.png"><br/>결제정보</a></div>
+      <div class="right"><a href="javascript:" class="button-mycar"><img src="/dev/jcar/static/plus/image/icon_car.png"><br/>내 차 정보</a></div>
+    </div>
+  </div>
+</div>
+<div class="black"></div>
+
+
+
+<div id="wrap" class="page-base page-main">
+  <div class="header">
+    <div class="wrap_gnb">
+      <ul class="gnb">
+        <li class="leftbtn"><a href="javascript:" class="button-sidebar-open"><img src="/dev/jcar/static/plus/image/icon_list.png"></a></li>
+        <li class="logo"><a href="javascript:"><img src="/dev/jcar/static/plus/image/top_logo.png"></a></li>
+        <li class="rightbtn"></li>
+      </ul>
+    </div><!--//gnb-->
+    <div class="w_p20">
+      <div class="wrap_content">
+        <div class="w_pr68">
+          <div class="searchform fl">
+            <div class="departure searchform1line">
+              <div class="searchtit">출발지</div>
+              <div style="padding-left:60px;"><div class="searchinbox">현재위치</div></div>
+            </div>
+            <div class="arrival searchform1line" style="margin-top:2px;">
+              <div class="searchtit">도착지</div>
+              <div style="padding-left:60px;"><div class="searchinbox">현재위치</div></div>
+            </div>
+          </div><!--//searchform-->
+        </div>
+        <div class="kmform fl">
+          <div class="smalltxt" style="line-height:18px;margin-top:8px;">거리</div>
+          <span class="bignum">0</span>
+          <div class="smalltxt">km</div>
+        </div>
+      </div><!--//wrap_content-->
+      <div class="clb"></div>
+      <div class="main-tabs wrap_content  h_t8">
+        <a href="javascript:JecarPlusMain.changeTab('evstation')"><div class="tab tab-evstation">충전경로</div></a>
+        <a href="javascript:JecarPlusMain.changeTab('deputation')"><div class="tab tablm tab-deputation">대리충전</div></a>
+        <a href="javascript:JecarPlusMain.changeTab('emergency')"><div class="tab tablm tab-emergency">EV호출</div></a>
+      </div>
+    </div>
+  </div><!-- .header -->
+  <div class="header_map">
+    <div class="wrap_gnb">
+      <ul class="gnb">
+        <li class="leftbtn"><a href="javascript:" class="button-route-disable"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+        <li class="logo"><a href="javascript:"><img src="/dev/jcar/static/plus/image/top_logo.png"></a></li>
+        <li class="rightbtn"></li>
+      </ul>
+    </div><!--//gnb-->
+  </div><!--//header-->
+
+  <div class="wrap_map">
+    <div class="map"></div>
+    <div class="control">
+      <a href="javascript:" class="button-current-location"><img src="/dev/jcar/static/plus/image/mapicon_here.png" width=45 height=45></a>
+    </div>
+    <div class="notibar notibar_red"></div>
+  </div>
+
+  <div class="wrap_detail">
+    <div class="detail-main-tab-evstation wrap_detail_course">
+      <div class="detail_course">
+        <h2 class="w_p20"><span class="name"></span><div class="delete"><img src="/dev/jcar/static/plus/image/history_delete_w.png"></div></h2>
+        <div class="station-chargers"></div>
+        <ul class="w_p20">
+          <li><span class="tit">이용시간:</span> <span class="detail-opendesc">24시간</span></li>
+          <li><span class="tit">상세주소:</span> <span class="detail-address">서울 강서구 방화대로 94 메이필드호텔</span></li>
+          <li><span class="tit">운영기관:</span> <span class="detail-agency">포스코 ICT</span></li>
+          <!--li><span class="tit">전화번호:</span> 02-333-4444</li-->
+        </ul>
+        <div class="w_p20 txt_r" style="padding-bottom:14px;"><a href="javascript:" class="btn_searchcourse">길찾기</a></div>
+      </div>
+      <a href="javascript:" class="route-unavailable btn_search_inert">충전경로 검색하기</a>
+      <a href="javascript:" class="route-available btn_search">충전경로 검색하기</a>
+      <a href="javascript:" class="button-route-disable route-enabled btn_search">충전경로 종료하기</a>
+    </div>
+
+    <div class="detail-main-tab-deputation deputation-condition wrap_detail_course">
+      <div class="detail_driver">
+        <div class="w_p20">
+          <ul class="deputation-car" style="padding-top:12px;">
+            <li class="tit">차종</li>
+            <li class="content"><input class="carname" value="아이오닉 일렉트릭" readonly></input></li>
+          </ul>
+          <div class="clb"></div>
+          <ul class="deputation-charger-speed" style="padding-top:6px;">
+            <li class="tit">충전</li>
+            <li class="content"><a href="javascript:" class="charger-speed-fast btn_driver btn_driver_on">급속충전</a><a href="javascript:" class="btn_driver" style="margin-left:2%;">완속충전</a></li>
+          </ul>
+          <div class="clb"></div>
+          <ul class="deputation-washing" style="padding-top:6px;">
+            <li class="tit">세차</li>
+            <li class="content"><a href="javascript:" class="washing-basic btn_driver">기본세차</a><a href="javascript:" class="washing-advanced btn_driver" style="margin-left:2%;">고급세차</a></li>
+          </ul>
+          <div class="clb"></div>
+          <ul class="deputation-pickup-time" style="padding-top:6px;">
+            <li class="tit">픽업</li>
+            <li class="content">
+              <div class="date" style="width:49%;float:left;">
+                <div class="btn_driver_layer"></div>
+                <a href="javascript:" class="btn_drivertime"></a>
+              </div>
+              <div class="time" style="width:49%;margin-left:2%;float:left;">
+                <div class="btn_driver_layer"></div>
+                <a href="javascript:" class="btn_drivertime"></a>
+              </div>
+            </li>
+          </ul>
+          <div class="clb"></div>
+          <p class="smalltxt" style="margin-top:6px;">* 반납지점이 다를 경우 추가요금이 청구됩니다.</p>
+        </div>
+      </div>
+      <a href="javascript:" class="btn_search btn_search_inert">대리충전 예약하기</a>
+    </div>
+  </div><!-- .wrap_detail -->
+
+  <div class="detail-main-tab-deputation deputation-reserve bg_light_color">
+    <div class="w_p20">
+      <div class="wrap_detail_pay">
+        <ul style="padding-top:18px;">
+          <li class="pickup_addr"><div class="tit">픽업장소</div><div class="content"></div></li>
+          <li class="return_addr line"><div class="tit">반납장소</div><div class="content"></div></li>
+          <li class="pickup_time" style="padding-top:12px;"><div class="tit">예약시간</div><div class="content"></div></li>
+          <li class="reserve_detail line"><div class="tit">예약내용</div><div class="content">급속충전(콤보) / 세차 선택안함</div></li>
+          <li class="creditcard" style="padding-top:12px;"><div class="tit">결제카드</div><div class="content">[삼성] 3777-2154-****-****</div></li>
+          <li class="mycar" style="padding-bottom:6px;"><div class="tit">차량정보</div><div class="content">현대 / 아이오닉일렉트릭</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="paynum">
+      <div class="tit">결제요금</div><div class="num"><span class="bignum"></span>원</div>
+    </div>
+    <div class="bottom"><a href="javascript:" class="btn_search">결제하기</a></div>
+  </div>
+</div><!-- .page-main -->
+
+<div id="wrap" class="page-base page-route-link bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('main')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">길찾기</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="txt16b txt_c" style="padding:30px 0 0 0;">길찾기에 이용하실<br/>어플을 선택하세요</div>
+      <div class="txt12 txt_c" style="padding:12px 0 30px 0;">Tmap 또는 카카오내비가 설치되지 않았을 경우<br/>길찾기>서비스 이용이 제한됩니다.</div>
+      <ul class="roadicon">
+        <li><a href="javascript:" class="link-tmap"><img src="/dev/jcar/static/plus/image/icon_tmap.png"><br/> Tmap</li>
+        <li class="last"><a href="javascript:" class="link-kakaonavi"><img src="/dev/jcar/static/plus/image/icon_kakao.png"><br/> 카카오내비</a></li>
+      <ul>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-route-address bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('main')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">주소검색</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="loginform1line" style="margin-top:10px;">
+        <div class="infotit"></div>
+        <div style="padding-left:70px;"><div class="infoinbox darktxt"><input type=text class="keyword" autocomplete="off"></div></div>
+        <div class="smallbtn"><button type=button class="button-search"><img src="/dev/jcar/static/plus/image/icon_search.png" style="width:20px;margin-top:10px;"></button></div>
+      </div>
+      <div class="address-list"></div>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-mycar-edit bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('main')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">내 차 정보</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <h2 style="margin-top:22px;">차량정보</h2>
+      <div class="car-maker-model loginform1line">
+        <div><a href="javascript:JecarPlusPage.load('mycar-edit-car-maker')"><div class="infoinbox darktxt">제조사, 모델명 선택</div><div class="smallbtn"><img src="/dev/jcar/static/plus/image/icon_circlemore.png" style="width:16px;margin-top:10px;"></div></a></div>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="charger-type charger-type-fast" style="position:absolute;width:42%;left:20px;">
+          <div class="btn_mycar_layer"><a href="javascript:">콤보</a><br/><a href="javascript:">차데모</a><a href="javascript:">AC3상</a><input class="infoin" placeholder="직접입력"></input></div>
+          <div class="loginform1line fl"><a href="javascript:"><div class="infoinbox arrow darktxt">급속충전</div></a></div>
+        </div>
+        <div class="charger-type charger-type-slow" style="position:absolute;width:42%;right:20px;">
+          <div class="btn_mycar_layer"><a href="javascript:">Type1(단상)</a><br/><a href="javascript:">Type2(3상)</a><input class="infoin" placeholder="직접입력"></input></div>
+          <div class="loginform1line fl"><a href="javascript:"><div class="infoinbox arrow darktxt">완속충전</div></a></div>
+        </div>
+        <div class="clb"></div>
+      </div>
+      <!-- <div class="txt12" style="line-height:30px;">대리운전 가능 여부를 미리 <span class="txtblue">확인</span>하세요 </div> -->
+      <h2 style="padding-top:80px;">차량번호</h2>
+      <div class="car-number">
+        <div class="loginform1line"><div class="infoinbox"><input class="infoin darktxt"></input></div></div>
+      </div>
+      <a href="javascript:" class="btn_login" style="margin-top:26px;">등록완료</a>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+<div id="wrap" class="page-base page-mycar-edit-car-maker bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('mycar-edit')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">내 차 정보</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <h2 style="margin-top:22px;">제조사 선택</h2>
+      <div class="car-maker-list"></div>
+      <div class="car-maker-custom">
+        <div class="loginform1line"><div class="infoinbox"><input class="directin darktxt" placeholder="기타(직접입력)"></input></div></div>
+      </div>
+      <a href="javascript:" class="btn_login" style="margin-top:26px;">다음</a>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+<div id="wrap" class="page-base page-mycar-edit-car-model bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('mycar-edit-car-maker')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">내 차 정보</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <h2 style="margin-top:22px;">모델명 선택 (<span class="car-maker"></span>)</h2>
+      <div class="car-model-list"></div>
+      <div class="car-model-custom">
+        <div class="loginform1line"><div class="infoinbox"><input class="directin darktxt" placeholder="기타(직접입력)"></input></div></div>
+        </div>
+      <a href="javascript:" class="btn_login" style="margin-top:26px;">완료</a>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+<div id="wrap" class="page-base page-creditcard-list bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('main')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">결제카드관리</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="loginform1line" style="margin-top:10px;border-bottom:1px solid #c5c8d6;">
+        <div class="infoinbox_h2">결제카드</div><div class="smallbtn"><a href="javascript:JecarPlusPage.load('creditcard-register')" class="btn_add">추가</a></div>
+      </div>
+      <div class="creditcard-list"></div>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-creditcard-register bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">결제카드관리</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="noti_card"><p>카드 정보는 결제 PG사에 저장됩니다.<br/>제이카 시스템에는 저장되지 않습니다.</p></div>
+      <h2>결제카드 등록</h2>
+      <div class="wrap_tab_card input-type"><div class="tab_card"><a href="javascript:" class="button-tab type-personal">개인</a></div><div class="tab_bar"></div><div class="tab_card"><a href="javascript:" class="button-tab type-business">법인</a></div></div>
+      <div class="clb"></div>
+      <div class="loginform1line input-name">
+        <div class="infotit">이름</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input class="infoin darktxt"></input></div></div>
+      </div>
+      <div class="loginform1line input-number">
+        <div class="infotit">카드번호</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input class="infoin darktxt"></input></div></div>
+      </div>
+      <div class="loginform1line input-expire">
+        <div class="infotit">유효기간</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input class="infoin darktxt" placeholder="00(월) / 00(년)"></input></div></div>
+        <div class="smallbtn"></div>
+      </div>
+      <div class="loginform1line input-pass">
+        <div class="infotit">비밀번호</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input type=password class="infoin darktxt" placeholder="앞 2자리만 입력"></input></div></div>
+        <div class="smallbtn"></div>
+      </div>
+      <div class="loginform1line input-regnum for-type type-personal">
+        <div class="infotit">생년월일</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input class="infoin darktxt" placeholder="앞 6자리만 입력"></input></div></div>
+        <div class="smallbtn"></div>
+      </div>
+      <div class="loginform1line input-regnum for-type type-business">
+        <div class="infotit">사업자번호</div>
+        <div style="padding-left:80px;"><div class="infoinbox darktxt"><input class="infoin darktxt" placeholder=""></input></div></div>
+        <div class="smallbtn"></div>
+      </div>
+      <a href="javascript:" class="btn_login" style="margin-top:24px;">등록완료</a>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-user-info bg_dark">
+  <div class="wrap_gnb">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">회원정보수정</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+<form id="user-info-form" method=post action="/dev/jcar/api/user/info" onsubmit="return false;">
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="loginform1line user-info-name" style="margin-top:10px;">
+        <div class="infotit">이름</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=text name=name class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line user-info-newpass">
+        <div class="infotit">비밀번호</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=password name=newpass class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line user-info-newpass-chk">
+        <div class="infotit">재입력</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=password name=newpass_chk class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line user-info-mobile-phone">
+        <div class="infotit">휴대전화</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=text name=mobile_phone class="infoin"></input></div></div>
+        <div class="smallbtn"><a href="#" class="btn_searchcourse">인증하기</a></div>
+      </div>
+      <a href="javascript:" class="btn_login" style="margin-top:24px;">저장하기</a>
+    </div>
+  </div>
+</form>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-customer-support bg_dark_color">
+	  <div class="wrap_gnb bg_dark_color">
+		<ul class="gnb">
+			<li class="leftbtn"><a href="javascript:"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+			<li class="tit">고객센터</li>
+			<li class="rightbtn"></li>
+		</ul>
+	  </div><!--//gnb-->
+	  <div class="w_p20 bg_light_color">
+	    <div class="wrap_content">
+		  <div class="txt16b txt_c" style="padding:30px 0 0 0;">도움이 필요하신가요?</div>
+		  <div class="txt12 txt_c" style="padding:12px 0 30px 0;">콜센터와 1:1문의를 이용해서 문의하시면<br/>친절하게 답변 드리겠습니다.</div>
+		  <ul class="roadicon" style="padding:0 0 36px 0;">
+		    <li><a href="#"><img src="/dev/jcar/static/plus/image/icon_customer01.png"><br/> 콜센터</li>
+			<li class="last"><a href="#"><img src="/dev/jcar/static/plus/image/icon_customer02.png"><br/> 1:1문의</a></li>
+	      <ul>
+          <div class="clb"></div>
+		</div>
+	  </div>
+	  <div class="w_p20 bg_dark_color">
+	    <div class="footertxt" style="padding:30px 0;">
+		주식회사 제이카<br/>
+		광주광역시 북구 첨단과기로 123, <br/>창업진흥센터 A동 118-2호<br/>
+		사업자등록번호: 179-88-00376<br/>
+		대표이사 강오순<br/>
+		통신판매신고번호: 제2016-광주북구-620호<br/><br/>
+		Copyright 2018 J'CAR All Rights Reserved
+		</div>
+	  </div>
+</div><!--/wrap-->
+
+<div id="wrap" class="page-base page-guide bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">이용안내</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="guideimgwrap">
+    <div class="guideimgtxt_wrap">
+      <span class="guideimgtxt">
+        되찾은 시간, 변화의 시작<br/>
+        새로운 EV 충전 습관
+      </span><br/>
+      <a href="#" class="btn_goguide" style="margin-top:40px;">영상으로 보기</a>
+    </div>
+  </div>
+  <div class="wrap_content">
+    <h2 style="padding-top:20px;padding-left:20px;">대리충전 이용방법</h2>
+    <div class="guidestep">
+      <div class="guidestep_circle">
+        <ul>
+          <li><div class="fl"><img src="/dev/jcar/static/plus/image/img_step01.png"></div><span class="stepnumb">1</span><br/><span class="steptxtb">간편한 EV 충전예약</span><br/><span class="steptxt">간편한 모바일 <br/>충전 예약!</span></li>
+          <div class="clb"></div>
+          <li><div class="fl"><img src="/dev/jcar/static/plus/image/img_step03.png"></div><span class="stepnumb">2</span><br/><span class="steptxtb">고객 EV 차량 이동</span><br/><span class="steptxt">EV 매니저가 <br/>안전하게 이동!</span></li>
+          <div class="clb"></div>
+          <li><div class="fl"><img src="/dev/jcar/static/plus/image/img_step04.png"></div><span class="stepnumb">3</span><br/><span class="steptxtb">충전 진행상황 확인</span><br/><span class="steptxt">충전, 세차진행상황 <br/>바로 확인!</span></li>
+          <div class="clb"></div>
+          <li><div class="fl"><img src="/dev/jcar/static/plus/image/img_step02.png"></div><span class="stepnumb">4</span><br/><span class="steptxtb">차량점검 후 배달</span><br/><span class="steptxt">배달완료 후 <br/>차량관리내용 확인</span></li>
+          <div class="clb"></div>
+        </ul>
+      </div>
+    </div>
+    <h2 style="padding-top:20px;padding-left:20px;">대리충전 요금안내</h2>
+    <div class="w_p20">
+      <table class="guideprice">
+        <tr>
+          <td class="lefttit b">충전</td>
+          <td class="lefttit" colspan="2">급속</td>
+          <td colspan="2">완속</td>
+        </tr>
+        <tr>
+          <td class="lefttit b">세차</td>
+          <td>기본</td>
+          <td class="lefttit">고급</td>
+          <td>기본</td>
+          <td>고급</td>
+        </tr>
+        <tr>
+          <td class="lefttit b">요금</td>
+          <td class="price">22,000</td>
+          <td class="price lefttit">43,000</td>
+          <td class="price">32,000</td>
+          <td class="price">52,000</td>
+        </tr>
+      </table>
+      <div class="guidepricetxt" style="padding-bottom:40px;">
+        <p><span class="tit">충전요금</span><br/>
+        EV충전요금은 고객님의 충전카드로 결제되어 추가요금이 발생되지 않습니다.(EV 매니저에게 충전카드를 전달해주세요)</p>
+        <p><span class="tit">반납위치</span><br/>
+        EV 픽업지점과 반납지점이 다를 경우 거리당 요금(1,000/km)이 추가로 결제됩니다.(픽업지점과 반납지점을 확인하세요)</p>
+        <p><span class="tit">충전시간</span><br/>
+        대리충전(충전 및 세차) 소요시간은 고객님 차량의 상태에 따라 다르나 급속충전의 경우 1~2시간, 완속충전의 경우 4~5시간 소요됩니다.</p>
+        <p><span class="tit">세차방법</span><br/>
+        미국의 슈퍼카들도 믿고 받기는 친환경 워터리스 세차서비스가 제공됩니다.(외관상태가 너무 더러운 차량은 별도 서비스 제공)</p>
+        <p><span class="tit">EV매니저</span><br/>
+        국내 EV 안전 및 정비교육 이수, 카케어(세차)서비스 교육 이수, 자체 EV전문가 육성 교육 이수자들로 구성된 EV관리 전문가입니다.</p>
+        <p><span class="tit">대리운전</span><br/>
+        대리운전 가능차량은 승용차, 승합차(승차전원 16인 이하), 화물차(1.4톤 이하), 영업용 차량(대리기사 운전 가능한 대여 사업용 차량)입니다.</p>
+        <p><span class="tit">보험안내</span><br/>
+        대인 무한, 대물1억원, 자손5천만원, 자차3천만원, 렌트카비용은 지원되지 않습니다.</p>
+        <p class="add">* 추가 문의사항은 고객센터로 연락주시면 친절하게 상담해드립니다.</p>
+      </div>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-usage-history bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('main')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">이용기록</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="usage-history-list bg_light_color">
+  <!--div class="w_p20 bg_light_color">
+    <div class="wrap_detail_pay">
+      <ul style="padding-top:18px;">
+        <li class="date">2018.07.08<div class="delete"><img src="/dev/jcar/static/plus/image/history_delete.png"></div></li>
+        <li><div class="tit">호출장소</div><div class="content">광주 송정역 대피소</div></li>
+        <li class="line"><div class="tit">반납장소</div><div class="content">광주 송정역 대피소</div></li>
+        <li style="padding-top:12px;"><div class="tit">예약시간</div><div class="content">14:30~15:30</div></li>
+        <li class="line"><div class="tit">예약내용</div><div class="content">급속충전(콤보) / 세차 선택안함</div></li>
+        <li style="padding-top:12px;padding-bottom:6px;"><div class="tit">결제카드</div><div class="content">[삼성] 3777-2154-****-****</div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="paynum">
+    <div class="tit">결제요금</div><div class="num"><span class="bignum">5,000</span>원</div>
+  </div-->
+  </div>
+  <button class="button-more btn_search">더보기</button>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-usage-history-detail bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('usage-history')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">자세히 보기</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_detail_pay">
+      <ul style="padding-top:18px;">
+        <li class="pickup_date date"><span>2018.07.08</span></li>
+        <li class="pickup_location"><div class="tit">호출장소</div><div class="content">광주 송정역 대피소</div></li>
+        <li class="return_location line"><div class="tit">반납장소</div><div class="content">광주 송정역 대피소</div></li>
+        <li class="pickup_time" style="padding-top:12px;"><div class="tit">예약시간</div><div class="content">14:30~15:30</div></li>
+        <li class="reserve_detail line"><div class="tit">예약내용</div><div class="content">급속충전(콤보) / 세차 선택안함</div></li>
+        <li class="bill_detail line" style="padding-top:12px;">
+          <!--div class="tit">대리충전</div><div class="content">5,000원</div-->
+        </li>
+        <li class="bill_date" style="padding-top:12px;"><div class="tit">결제일시</div><div class="content">2018.07.08 10:33</div></li>
+        <li class="creditcard" style="padding-bottom:6px;"><div class="tit">결제카드</div><div class="content">[삼성] 3777-2154-****-****</div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="paynum">
+    <div class="tit">결제요금</div><div class="num"><span class="bignum">5,000</span>원</div>
+  </div>
+</div><!--/wrap-->
+
+
+
+<div id="wrap" class="page-base page-login bg_all">
+  <div class="wrap_gnb">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:" class="button-sidebar-open"><img src="/dev/jcar/static/plus/image/icon_list.png"></a></li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="login_logo"><img src="/dev/jcar/static/plus/image/login_logo.png"></div>
+    <div class="wrap_content">
+      <form>
+        <div class="loginform1line">
+          <div class="infotit">이메일</div>
+          <div style="padding-left:80px;"><div class="infoinbox"><input name=id autocomplete=off class="infoin"></input></div></div>
+        </div>
+        <div class="loginform1line">
+          <div class="infotit">비밀번호</div>
+          <div style="padding-left:80px;"><div class="infoinbox"><input type=password name=pw class="infoin"></input></div></div>
+        </div>
+        <div class="logincheck"><input type=checkbox name="is_keep" id="login_check_keep" class="image-check"><label for="login_check_keep"><img src="/dev/jcar/static/plus/image/check_on.png" class="on"><img src="/dev/jcar/static/plus/image/check_off.png" class="off">자동로그인</label></div>
+        <button type=submit class="button-login btn_login" style="margin-top:22px;">로그인</button>
+      </form>
+      <div class="logincheck find-password" onclick="JecarPlusPage.load('find-password')">비밀번호를 잊으셨나요?</div>
+      <div style="margin-top:60px;"><a href="javascript:JecarPlusPage.load('join-terms')" class="btn_join">회원가입</a><a href="javascript:JecarPlusPopup.alert('서비스 준비중 입니다.')" class="btn_join_corp" style="margin-left:2%;">법인회원가입</a></div>
+    </div>
+  </div>
+</div><!-- .page-login -->
+
+<div id="wrap" class="page-base page-find-password bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('login')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">비밀번호 찾기</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+    <div class="wrap_content">
+<form onsubmit='return false'>
+      <div class="loginform1line" style="margin-top:10px;">
+        <div><div class="infoinbox darktxt"><input class="infoin darktxt" placeholder="이메일을 입력하세요"></input></div></div>
+      </div>
+      <a href="javascript:alert('N/I')" class="btn_login" style="margin-top:24px;">확인</a>
+</form>
+    </div>
+  </div>
+</div><!--/wrap-->
+
+
+<div id="wrap" class="page-base page-join-terms bg_light_color">
+  <div class="wrap_gnb bg_dark_color">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('login')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">약관</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+  <div class="w_p20">
+<form onsubmit='return false'>
+    <div class="wrap_content">
+      <div class="terms1line">
+        <div class="infocheck"><input type=checkbox id="check-terms-all" class="image-check"><label for="check-terms-all"><img src="/dev/jcar/static/plus/image/check_w_on.png" class="on"><img src="/dev/jcar/static/plus/image/check_w_off.png" class="off"></label></div>
+        <div class="infoinbox" style="padding-left:24px;">아래 약관에 모두 동의합니다.</div>
+      </div>
+      <div class="terms1line" style="border-bottom:none;">
+        <div class="infocheck"><input type=checkbox id="check-terms-service" class="image-check required"><label for="check-terms-service"><img src="/dev/jcar/static/plus/image/check_w_on.png" class="on"><img src="/dev/jcar/static/plus/image/check_w_off.png" class="off"></label></div>
+        <div class="infoinbox" style="padding-left:24px;">이용약관 동의(필수)</div>
+      </div>
+      <div class="termscontent terms-service">
+        <div style="padding:12px;"></div>
+      </div>
+      <div class="terms1line" style="border-bottom:none;">
+        <div class="infocheck"><input type=checkbox id="check-terms-privacy" class="image-check required"><label for="check-terms-privacy"><img src="/dev/jcar/static/plus/image/check_w_on.png" class="on"><img src="/dev/jcar/static/plus/image/check_w_off.png" class="off"></label></div>
+        <div class="infoinbox" style="padding-left:24px;">개인정보수집 동의(필수)</div>
+      </div>
+      <div class="termscontent terms-privacy">
+        <div style="padding:12px;"></div>
+      </div>
+      <div class="terms1line" style="border-bottom:none;">
+        <div class="infocheck"><input type=checkbox id="check-terms-location" class="image-check required"><label for="check-terms-location"><img src="/dev/jcar/static/plus/image/check_w_on.png" class="on"><img src="/dev/jcar/static/plus/image/check_w_off.png" class="off"></label></div>
+        <div class="infoinbox" style="padding-left:24px;">위치기반 서비스 이용약관 동의(필수)</div>
+      </div>
+      <div class="termscontent terms-location">
+        <div style="padding:12px;"></div>
+      </div>
+      <button type=button class="btn_login" style="margin-top:24px;">다음</button>
+    </div>
+  </div>
+</form>
+</div><!--/wrap-->
+
+<div id="wrap" class="page-base page-join-register bg_dark">
+  <div class="wrap_gnb">
+    <ul class="gnb">
+      <li class="leftbtn"><a href="javascript:JecarPlusPage.load('login')"><img src="/dev/jcar/static/plus/image/icon_before.png"></a></li>
+      <li class="tit">회원정보입력</li>
+      <li class="rightbtn"></li>
+    </ul>
+  </div><!--//gnb-->
+<form id="join-register-form" method=post action="/dev/jcar/api/user/join/register" onsubmit="return false;">
+  <div class="w_p20">
+    <div class="wrap_content">
+      <div class="loginform1line join-register-name">
+        <div class="infotit">이름</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=text name=name autocomplete=off class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line join-register-id">
+        <div class="infotit">이메일</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=text name=id autocomplete=off class="infoin"></input></div></div>
+        <div class="smallbtn"><button type=button class="btn_searchcourse">중복체크</button></div>
+      </div>
+      <div class="loginform1line join-register-pw">
+        <div class="infotit">비밀번호</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=password name=pw class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line join-register-chkpw">
+        <div class="infotit">재입력</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=password name=chkpw class="infoin"></input></div></div>
+      </div>
+      <div class="loginform1line join-register-moible-phone">
+        <div class="infotit">휴대전화</div>
+        <div style="padding-left:80px;"><div class="infoinbox"><input type=text name=mobile_phone autocomplete=off class="infoin"></input></div></div>
+        <div class="smallbtn"><button type=button class="btn_searchcourse">인증하기</button></div>
+      </div>
+      <input type=hidden name=with_login value=1>
+      <button type=button class="btn_login" style="margin-top:24px;">가입완료</button>
+    </div>
+  </div>
+</form>
+</div><!--/wrap-->
+
+
+
+
+<script type="text/javascript">
+"use strict";
+
+function EvStationMarkers(map)
+{
+  var clusterer = null;
+  var jqoDetail = null;
+
+  var evstation_updater = null;
+  var is_update_enabled = false;
+  this.enableUpdater = function(is_enable) {
+    is_update_enabled = is_enable;
+  };
+  var markers = {};
+
+  var is_invalidated = false;
+  function addMarker(marker)
+  {
+    if(clusterer) {
+      clusterer.addMarker(marker, true);
+    }
+    else {
+      marker.setMap(map);
+    }
+    is_invalidated = true;
+  }
+  function removeMarker(marker)
+  {
+    if(clusterer) {
+      clusterer.removeMarker(marker, true);
+    }
+    else {
+      marker.setMap(null);
+    }
+    is_invalidated = true;
+  }
+  function invalidate()
+  {
+    if(is_invalidated)
+    {
+      is_invalidated = false;
+      if(clusterer) {
+        clusterer.redraw();
+      }
+      else {
+      }
+    }
+  }
+
+  function clearMarkers()
+  {
+    for(var id in markers)
+    {
+      removeMarker(markers[id]);
+    }
+    markers = {};
+    showDetail(null);
+  }
+  this.clearMarkers = clearMarkers;
+
+  this.get_detail_evstation = function()
+  {
+    return jqoDetail.evstation?$.extend(true, {}, jqoDetail.evstation):null;
+  }
+  function showDetail(evstation)
+  {
+    jqoDetail.evstation = evstation;
+    if(evstation)
+    {
+      $('.name', jqoDetail).text(evstation.name);
+      var on_state = 'na';
+      switch(evstation.state)
+      {
+      case 1: on_state = 'standby'; break;
+      case 2: on_state = 'inuse'; break;
+      default: break;
+      }
+      $('.state', jqoDetail).removeClass('on');
+      $('.state-'+on_state, jqoDetail).addClass('on');
+
+      var jqoChargers = $('.station-chargers', jqoDetail);
+      jqoChargers.empty();
+      for(var i=0; i<evstation.chargers.length;i++)
+      {
+        var evcharger = evstation.chargers[i];
+        var jqoCharger = $('<div>');
+        jqoCharger.addClass("option w_p20");
+        jqoCharger.html('<span class="type type-sae-ccs">DC콤보</span><span class="bar">ㅣ</span><span class="type type-chademo">DC차데모</span><span class="bar">ㅣ</span><span class="type type-iec-type2">AC 3상</span><span class="bar">ㅣ</span><span class="type type-slow">완속</span><span class="state state-standby icon_condition1" style="margin-left:8px;">층전가능</span><span class="state state-na icon_condition2" style="margin-left:8px;">수리중</span><span class="state state-inuse icon_condition3" style="margin-left:8px;">충전중</span>');
+
+        $('.type', jqoCharger).addClass('inert');
+        if(evcharger.plugs.indexOf('chademo') >= 0 ) { $('.type-chademo', jqoCharger).removeClass('inert'); }
+        if(evcharger.plugs.indexOf('iec_type2') >= 0) { $('.type-iec-type2', jqoCharger).removeClass('inert'); }
+        if(evcharger.plugs.indexOf('sae_ccs') >= 0) { $('.type-sae-ccs', jqoCharger).removeClass('inert'); }
+        if(0
+          || evcharger.plugs.indexOf('b_type_5_pin') >= 0
+          || evcharger.plugs.indexOf('c_type_5_pin') >= 0
+          || evcharger.plugs.indexOf('bc_type_5_pin') >= 0
+          || evcharger.plugs.indexOf('bc_type_7_pin') >= 0
+        ) { $('.type-slow', jqoCharger).removeClass('inert'); }
+
+        var on_state = 'na';
+        switch(evcharger.state)
+        {
+        case 1: on_state = 'standby'; break;
+        case 2: on_state = 'inuse'; break;
+        default: break;
+        }
+        $('.state', jqoCharger).removeClass('on');
+        $('.state-'+on_state, jqoCharger).addClass('on');
+
+        jqoChargers.append(jqoCharger);
+      }
+
+      $('.detail-opendesc', jqoDetail).text(evstation.opendesc);
+      $('.detail-address', jqoDetail).text(evstation.address);
+      $('.detail-agency', jqoDetail).text(evstation.agency);
+
+      $('body').addClass('on-evstation-detail');
+    }
+    else
+    {
+      $('body').removeClass('on-evstation-detail');
+    }
+  }
+
+  function toggleMarkerPopup()
+  {
+    var marker = this;
+
+    showDetail((jqoDetail.evstation!=marker.evstation)?marker.evstation:null);
+  }
+
+  var latlng_validator = null;
+  this.set_latlng_validator = function(fn)
+  {
+    latlng_validator = fn;
+  }
+
+  function getMarkerImageUrl(evstation)
+  {
+    var color = null;
+    var number = null;
+
+    var numbers = {};
+    for(var i=0; i< evstation.chargers.length; i++)
+    {
+      var charger = evstation.chargers[i];
+      if(!numbers[charger.state]) { numbers[charger.state] = 0; }
+      numbers[charger.state]++;
+    }
+    number = (numbers[evstation.state]>5)?'5plus':(numbers[evstation.state]>0)?numbers[evstation.state]:null;
+    switch(evstation.state)
+    {
+    case 1: // standby
+      color = 'green';
+      break;
+    case 2: // inuse
+      color = 'grey';
+      number = '0';
+      break;
+    case 99: // error
+    default:
+      color = 'red';
+      number = '';
+      break;
+    }
+    if(color !== null || number !== null)
+    {
+      return "/dev/jcar/static/plus/image/mapicon"+(color?'_':'')+color+(number?'_':'')+number+'.png';
+    }
+    return null;
+  }
+  function getMarkerImage(evstation)
+  {
+    var url = getMarkerImageUrl(evstation);
+    var mi = null;
+    if(url)
+    {
+      mi = new daum.maps.MarkerImage(url, new daum.maps.Size(35, 45));
+    }
+    return mi;
+  }
+
+  function onEvStationUpdated(evstations)
+  {
+    if(!evstations) { return; }
+
+    for(var i=0; i < evstations.length; i++)
+    {
+      var evstation = evstations[i];
+      if(markers[evstation.id])
+      {
+        if(markers[evstation.id].evstation == evstation)
+        {
+          continue;
+        }
+        // TODO: check popup is open, and reopen popup after re-making marker
+        //toggleMarkerPopup.apply(markers[evstation.id]);
+        removeMarker(markers[evstation.id]);
+        delete markers[evstation.id];
+      }
+      var latlng = new daum.maps.LatLng(evstation.latlng[0], evstation.latlng[1]);
+      if(latlng_validator && !latlng_validator(latlng)) { continue; }
+
+      var markerOpts = {
+        position: latlng,
+        image: getMarkerImage(evstation),
+
+        last_dummy:null
+      };
+
+      var marker = new daum.maps.Marker(markerOpts);
+      marker.evstation = evstation;
+      addMarker(marker);
+      daum.maps.event.addListener(marker, 'click', toggleMarkerPopup);
+      markers[evstation.id] = marker;
+    }
+    invalidate();
+  }
+  function update_evstations(south, west, north, east)
+  {
+    if(is_update_enabled)
+    {
+      evstation_updater.update(south, west, north, east);
+    }
+  }
+  function onMapBoundChanged()
+  {
+    var bounds = map.getBounds();
+    var sw = bounds.getSouthWest();
+    var ne = bounds.getNorthEast();
+    update_evstations(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng());
+  }
+  function init_evstation_updater()
+  {
+    evstation_updater = new EvStationUpdater({
+      autoupdate: 0,
+      onUpdate: onEvStationUpdated,
+      last_dummy: null
+    });
+    daum.maps.event.addListener(map, 'bounds_changed', onMapBoundChanged);
+    daum.maps.event.trigger(map, 'bounds_changed');
+    setInterval(function() {
+      daum.maps.event.trigger(map, 'bounds_changed');
+    }, 10000);
+  }
+
+  function init()
+  {
+    clusterer = new daum.maps.MarkerClusterer({
+      gridSize: 80,
+      averageCenter: true,
+      minLevel: 3,
+      minClusterSize: 3,
+
+      calculator: [19, 49, 99],
+      texts: function(num) {
+        if(num >= 100) { return '100+'; }
+        if(num >= 50) { return '50+'; }
+        if(num >= 20) { return '20+'; }
+        return num;
+      },
+      styles: [
+        {
+          width:'38px', height:'38px', border:'1px solid #fff', borderRadius:'50%',
+          color:'#ffffff', backgroundColor:'#31cb0e', opacity:'0.8',
+          textAlign:'center', lineHeight:'38px'
+        },
+        {
+          width:'48px', height:'48px', border:'1px solid #fff', borderRadius:'50%',
+          color:'#fff', backgroundColor:'#0fbc85', opacity:'0.8',
+          textAlign:'center', lineHeight:'48px'
+        },
+        {
+          width:'48px', height:'48px', border:'1px solid #fff', borderRadius:'50%',
+          color:'#fff', backgroundColor:'#0080cb', opacity:'0.8',
+          textAlign:'center', lineHeight:'48px'
+        },
+        {
+          width:'62px', height:'62px', border:'1px solid #fff', borderRadius:'50%',
+          color:'#fff', backgroundColor:'#003ccb', opacity:'0.8',
+          textAlign:'center', lineHeight:'62px'
+        },
+      ],
+
+      map: map
+    });
+    jqoDetail = $('.detail-main-tab-evstation .detail_course');
+    $('.delete', jqoDetail).click(function() {
+      showDetail(null);
+    });
+    $('.btn_searchcourse', jqoDetail).click(function() {
+      if(jqoDetail.evstation)
+      {
+        JecarPlusPage.load('route-link', {/*evstation:evstation*/});
+      }
+    });
+    showDetail(null);
+
+    init_evstation_updater();
+  }
+
+  init();
+}
+
+function ChargingDeputationZoneTest(pickup_latlng, return_latlng, cb)
+{
+  var url = "/dev/jcar/api/deputation/charging/zone/test";
+  var data = {
+    latlng: [pickup_latlng.join(','), return_latlng.join(',')]
+  }
+  $.ajax({url:url, data:data, traditional:true, success:function(response) {
+    if(response)
+    {
+      if(response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+      {
+        cb(true);
+        return;
+      }
+      if(response.errCode === commonConsts.JSON_ERRCODE_OUT_OF_RANGE)
+      {
+        cb(false);
+        return;
+      }
+    }
+    cb(null);
+  }});
+}
+
+$(function() { JecarPlusPopup.loading(function(loaded) {
+  var v = {};
+  var daum_geocoder = new daum.maps.services.Geocoder();
+  var daum_places = new daum.maps.services.Places();
+
+  var deferredChain = new commonDeferredChain({is_log:true, desc:'init'});
+
+  deferredChain.addChain(function(deferred) {
+    v.currLatLng = null;
+
+    Kakao.init('dbf7bff791b1c8818f622106b181c387');
+    evStation.init({
+      urlpattern: '/dev/jcar/api/evc/stations/%SOUTH%/%WEST%/%NORTH%/%EAST%',
+      last_dummy:null
+    });
+
+    v.jqoDeputationCondition = $('.detail-main-tab-deputation.deputation-condition');
+    v.jqoDeputationReserve = $('.detail-main-tab-deputation.deputation-reserve');
+    v.jqoDeputationConditionSubmit = $('.btn_search', v.jqoDeputationCondition);
+
+    deferred.resolve();
+  }, {desc:'common'});
+
+  // user
+  deferredChain.addChain(function(deferred) {
+    v.loadUser = function(done) {
+      $.ajax({url:"/dev/jcar/api/user/info", success:function(data) {
+        v.user = data?data.data:null;
+        done();
+      }});
+    }
+    // TODO: check and update v.user periodically???
+
+    v.loadUser(deferred.resolve);
+  }, {desc:'user'});
+
+  // sidebar
+  deferredChain.addChain(function(deferred) {
+    var jqoSidebar = $('#wrap_navi');
+    v.openSidebar = function()
+    {
+      if(!jqoSidebar.hasClass("show"))
+      {
+        if(v.user)
+        {
+          jqoSidebar.removeClass("status-logout").addClass("status-login");
+          var imgurl = v.user.image?v.user.image:"/dev/jcar/static/plus/image/id_blank.png";
+          if($(".id.on-login img", jqoSidebar).attr("src") != imgurl)
+          {
+            $(".id.on-login img", jqoSidebar).attr("src", imgurl);
+          }
+          $(".id.on-login .txt_name", jqoSidebar).text(v.user.name);
+        }
+        else
+        {
+          jqoSidebar.removeClass("status-login").addClass("status-logout");
+        }
+
+        jqoSidebar.css({'marginLeft': -280}).addClass("show");
+        jqoSidebar.animate({'marginLeft': 0}, 300);
+      }
+    }
+    v.closeSidebar = function()
+    {
+      if(jqoSidebar.hasClass("show"))
+      {
+        jqoSidebar.animate({'marginLeft': -280}, {duration:300, complete:function() { jqoSidebar.removeClass('show'); }});
+      }
+    }
+
+    $('.button-sidebar-open').click(v.openSidebar);
+    $('.button-sidebar-close').click(v.closeSidebar);
+
+    $('.button-login-page', jqoSidebar).click(function() {
+      JecarPlusPage.load('login');
+    });
+    $('.button-logout', jqoSidebar).click(function() {
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/user/logout", success:function(response) {
+          loaded();
+          if(response && (response.errCode === commonConsts.JSON_ERRCODE_SUCCESS || response.errCode == commonConsts.JSON_ERRCODE_AUTH_REQUIRED))
+          {
+            v.user = null;
+            JecarPlusPage.load('main');
+          }
+          else
+          {
+            JecarPlusPopup.alert("오류가 발생하였습니다.");
+            v.loadUser(function() {
+              JecarPlusPage.load('main');
+            });
+          }
+        }});
+      });
+    });
+
+    $('.button-usage-history', jqoSidebar).click(function() {
+      if(v.user) { JecarPlusPage.load('usage-history'); }
+      else { JecarPlusPopup.alert("로그인해주세요"); }
+    });
+    $('.button-user-info', jqoSidebar).click(function() {
+      if(v.user) { JecarPlusPage.load('user-info'); }
+      else { JecarPlusPopup.alert("로그인해주세요"); }
+    });
+    $('.button-creditcard', jqoSidebar).click(function() {
+      if(v.user) { JecarPlusPage.load('creditcard-list'); }
+      else { JecarPlusPopup.alert("로그인해주세요"); }
+    });
+    $('.button-mycar', jqoSidebar).click(function() {
+      if(v.user) { JecarPlusPage.load('mycar-edit'); }
+      else { JecarPlusPopup.alert("로그인해주세요"); }
+    });
+
+    deferred.resolve();
+  }, {desc:'sidebar'});
+
+  // page-main
+  deferredChain.addChain(function(deferred) {
+    v.jqoWrapMap = $('.page-main .wrap_map');
+    var mapContainer = $(".map", v.jqoWrapMap)[0];
+    v.initMapLevel = 5;
+    v.initMapLatlng = new daum.maps.LatLng(37.56659, 126.97741);
+    v.map = new daum.maps.Map(mapContainer, {
+      center: v.initMapLatlng,
+      level: 5,
+      last_dummy: null
+    });
+
+    v.markerImages = {}
+    v.markerImages.current = new daum.maps.MarkerImage("/dev/jcar/static/plus/image/current.png", new daum.maps.Size(35, 35));
+    v.markerImages.departure = new daum.maps.MarkerImage("/dev/jcar/static/plus/image/mapicon_start.png", new daum.maps.Size(35, 45));
+    v.markerImages.arrival = new daum.maps.MarkerImage("/dev/jcar/static/plus/image/mapicon_arrival.png", new daum.maps.Size(35, 45));
+
+    v.evstationMarkers = new EvStationMarkers(v.map);
+    v.currentMarker = new daum.maps.Marker({image:v.markerImages.current, zIndex:-1, clickable:false });
+    v.departureMarker = new daum.maps.Marker({image:v.markerImages.departure, zIndex:10, clickable:false });
+    v.arrivalMarker = new daum.maps.Marker({image:v.markerImages.arrival, zIndex:10, clickable:false });
+
+    // map height adjust for .wrap_detail
+    var last_wdHeight = null;
+    var jqoWrapDetail = $('.page-main .wrap_detail');
+    v.validateMap = function(is_force) {
+      var chk_height = jqoWrapDetail.height();
+      if(is_force || last_wdHeight !== chk_height)
+      {
+        last_wdHeight = chk_height;
+        v.jqoWrapMap.css('bottom', last_wdHeight);
+        v.map.relayout();
+      }
+    }
+    setInterval(v.validateMap, 200);
+
+    var jqoMainRouteDeparture = $('.page-main .searchform .departure .searchinbox');
+    var jqoMainRouteArrival = $('.page-main .searchform .arrival .searchinbox');
+    jqoMainRouteDeparture.prop('route_address_target', 'main-route-departure');
+    jqoMainRouteArrival.prop('route_address_target', 'main-route-arrival');
+    var jqoMainRouteAddress = jqoMainRouteDeparture.add(jqoMainRouteArrival);
+    jqoMainRouteAddress.click(function() {
+      var jqoTarget = $(this);
+      JecarPlusPage.load('route-address', {target:jqoTarget.prop('route_address_target'), keyword:jqoTarget.text(), tit:jqoTarget.parentsUntil('.searchform', '.searchform1line').children('.searchtit').text()});
+    });
+    function updateRouteAddressMarker(is_hide)
+    {
+      var routeAddressLatlng = v.getRouteAddressLatLng();
+
+      v.departureMarker.setMap(null);
+      if(!is_hide && routeAddressLatlng.departure)
+      {
+        v.departureMarker.setPosition(new daum.maps.LatLng(routeAddressLatlng.departure[0], routeAddressLatlng.departure[1]));
+        v.departureMarker.setMap(v.map);
+      }
+
+      v.arrivalMarker.setMap(null);
+      if(!is_hide && routeAddressLatlng.arrival)
+      {
+        v.arrivalMarker.setPosition(new daum.maps.LatLng(routeAddressLatlng.arrival[0], routeAddressLatlng.arrival[1]));
+        v.arrivalMarker.setMap(v.map);
+      }
+    }
+
+    function updateChargingDeputationZoneStatus(isok)
+    {
+      $('.page-main').data('charging-deputation-zone-status', undefined);
+      v.jqoDeputationConditionSubmit.trigger('data-changed');
+      if(JecarPlusMain.isCurrentTab('deputation'))
+      {
+        var routeAddressLatlng = v.getRouteAddressLatLng();
+        if(routeAddressLatlng.departure && routeAddressLatlng.arrival)
+        {
+          ChargingDeputationZoneTest(routeAddressLatlng.departure, routeAddressLatlng.arrival, onUpdateChargingDeputationZoneStatus);
+        }
+        else
+        {
+          onUpdateChargingDeputationZoneStatus(undefined);
+        }
+      }
+      else
+      {
+        onUpdateChargingDeputationZoneStatus(undefined);
+      }
+    }
+    function onUpdateChargingDeputationZoneStatus(isok)
+    {
+      JecarPlusMain.setNotibar();
+
+      $('.page-main').data('charging-deputation-zone-status', isok);
+      if(JecarPlusMain.isCurrentTab('deputation'))
+      {
+        if(isok)
+        {
+          JecarPlusMain.setNotibar('서비스 가능 지역입니다.');
+        }
+        else if(isok===false)
+        {
+          JecarPlusMain.setNotibar('서비스 준비 지역입니다.', true);
+        }
+        else if(isok===null)
+        {
+          JecarPlusMain.setNotibar('통신오류가 발생하였습니다.', true);
+        }
+        else if(isok===undefined)
+        {
+          JecarPlusMain.setNotibar('현재 위치가 확인되지 않습니다.', true);
+        }
+      }
+      v.jqoDeputationConditionSubmit.trigger('data-changed');
+    }
+    jqoMainRouteAddress.bind('item_changed', function() {
+      updateChargingDeputationZoneStatus();
+    });
+    v.getRouteAddressLatLng = function()
+    {
+      var departure_item = jqoMainRouteDeparture.data('item');
+      var arrival_item = jqoMainRouteArrival.data('item');
+      var departure_lat = departure_item?departure_item.y:v.currLatLng?v.currLatLng[0]:null;
+      var departure_lng = departure_item?departure_item.x:v.currLatLng?v.currLatLng[1]:null;
+      var arrival_lat = arrival_item?arrival_item.y:v.currLatLng?v.currLatLng[0]:null;
+      var arrival_lng = arrival_item?arrival_item.x:v.currLatLng?v.currLatLng[1]:null;
+
+      return {
+        departure: (departure_lat!==null&&departure_lng!==null)?[departure_lat, departure_lng]:null,
+        arrival: (arrival_lat!==null&&arrival_lng!==null)?[arrival_lat, arrival_lng]:null,
+        departure_item: departure_item, arrival_item:arrival_item
+      }
+    }
+
+    function updateMainRouteAddress(target, item)
+    {
+      var jqoRouteAddressTarget = null;
+      switch(target)
+      {
+      case jqoMainRouteDeparture.prop('route_address_target'): jqoRouteAddressTarget=jqoMainRouteDeparture;break;
+      case jqoMainRouteArrival.prop('route_address_target'): jqoRouteAddressTarget=jqoMainRouteArrival;break;
+      }
+      if(jqoRouteAddressTarget)
+      {
+        jqoRouteAddressTarget.data('item', item);
+        jqoRouteAddressTarget.text(item?item._internal_main_text:'현재위치');
+        jqoRouteAddressTarget.trigger('item_changed');
+      }
+    }
+
+    var routePathPolyline = null;
+    var routePathSimplified = null;
+    function setRoutePath2Map(latlngs)
+    {
+      var distance = 0;
+      if(routePathPolyline) {
+        routePathPolyline.setMap(null);
+        routePathPolyline = null;
+        routePathSimplified = null;
+      }
+      updateRouteAddressMarker(!latlngs);
+      if(latlngs && latlngs.length)
+      {
+        var path = [];
+        var simplify_points = [];
+        var bounds = new daum.maps.LatLngBounds();
+        for(var i=0; i< latlngs.length; i++)
+        {
+          var latlng = new daum.maps.LatLng(latlngs[i][0], latlngs[i][1]);
+          path.push(latlng);
+          bounds.extend(latlng);
+          simplify_points.push({x:latlngs[i][1],y:latlngs[i][0]});
+        }
+        routePathSimplified = [];
+        simplify_points = simplify(simplify_points, 0.01);
+        for(var i=0; i<simplify_points.length; i++)
+        {
+          routePathSimplified.push(new daum.maps.LatLng(simplify_points[i].y, simplify_points[i].x));
+        }
+
+        routePathPolyline = new daum.maps.Polyline({
+          path: path,
+          strokeWeight: 5, strokeColor: '#0000FF',
+          map: v.map
+        });
+        distance = routePathPolyline.getLength();
+        v.map.setBounds(bounds);
+      }
+      v.evstationMarkers.clearMarkers();
+      daum.maps.event.trigger(v.map, 'bounds_changed');
+      $('.page-main .kmform .bignum').text(parseInt(distance/1000));
+    }
+    function distanceToRoutePath(latlng)
+    {
+      var min_distance = null;
+      if(routePathSimplified)
+      {
+        for(var i=0; i<routePathSimplified.length; i++)
+        {
+          var distance = new daum.maps.Polyline({path:[latlng, routePathSimplified[i]]}).getLength();
+          if(min_distance === null || distance < min_distance) { min_distance = distance; }
+        }
+      }
+      return min_distance;
+    }
+    v.evstationMarkers.set_latlng_validator(function(latlng) {
+      var distance = distanceToRoutePath(latlng);
+      return (distance === null || distance < 5000);
+    });
+
+    var locationBeforeRoute = null;
+    function enableRoutePath(latlngs)
+    {
+      if(latlngs && latlngs.length) {
+        locationBeforeRoute = { level: v.map.getLevel(), center: v.map.getCenter() };
+        $('.page-main').addClass('status-route-enabled');
+        v.map.relayout();
+      }
+      setRoutePath2Map(latlngs);
+    }
+    function disableRoutePath()
+    {
+      setRoutePath2Map();
+      $('.page-main').removeClass('status-route-enabled');
+      v.map.relayout();
+      if(locationBeforeRoute) {
+        v.map.setLevel(locationBeforeRoute.level);
+        v.map.setCenter(locationBeforeRoute.center);
+        locationBeforeRoute = null;
+      }
+    }
+
+    $('.page-main .wrap_map .control .button-current-location').click(function() {
+      if(!v.currLatLng)
+      {
+        JecarPlusPopup.alert("현재위치가 확인되지 않습니다.");
+        return;
+      }
+      else
+      {
+        v.map.setLevel(v.initMapLevel);
+        v.map.setCenter(new daum.maps.LatLng(v.currLatLng[0], v.currLatLng[1]));
+      }
+    });
+
+    $('.page-main .route-available').click(function() {
+      var routeAddressLatlng = v.getRouteAddressLatLng();
+      if(!routeAddressLatlng.departure || !routeAddressLatlng.arrival)
+      {
+        JecarPlusPopup.alert("현재위치가 확인되지 않습니다.");
+        return;
+      }
+
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/plus/route/"+[routeAddressLatlng.departure[0],routeAddressLatlng.departure[1],routeAddressLatlng.arrival[0],routeAddressLatlng.arrival[1]].join('/'), success:function(data) {
+          if(data && data.data && data.data.coords)
+          {
+            var latlngs = polyline.decode(data.data.coords);
+            enableRoutePath(latlngs);
+            loaded();
+          }
+          else
+          {
+            loaded();
+            JecarPlusPopup.alert("경로를 찾지 못하였습니다.");
+          }
+        }});
+      });
+    });
+    $('.page-main .button-route-disable').click(function() {
+      disableRoutePath();
+    });
+
+    JecarPlusMain.bind('post-tab-change', function(tab) {
+      updateChargingDeputationZoneStatus();
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      v.evstationMarkers.enableUpdater(false);
+      if(page == 'main') {
+        v.evstationMarkers.enableUpdater(true);
+        if(opts.route_address_target)
+        {
+          updateMainRouteAddress(opts.route_address_target, opts.route_address_item);
+        }
+        if(jqoMainRouteDeparture.data('item') || jqoMainRouteArrival.data('item'))
+        {
+          $('.page-main').addClass('status-route-available');
+        }
+        else
+        {
+          $('.page-main').removeClass('status-route-available status-route-endabled');
+        }
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-main'});
+
+  // page-main tab-evstation
+  deferredChain.addChain(function(deferred) {
+    deferred.resolve();
+  }, {desc:'page-main tab-evstation'});
+
+  // page-main tab-deputation
+  deferredChain.addChain(function(deferred) {
+    $('.deputation-charger-speed a.btn_driver', v.jqoDeputationCondition).click(function() {
+      $('.deputation-charger-speed a.btn_driver', v.jqoDeputationCondition).removeClass('btn_driver_on');
+      $(this).addClass('btn_driver_on');
+    });
+    $('.deputation-washing a.btn_driver', v.jqoDeputationCondition).click(function() {
+      if($(this).hasClass('btn_driver_on'))
+      {
+        $('.deputation-washing a.btn_driver', v.jqoDeputationCondition).removeClass('btn_driver_on');
+      }
+      else
+      {
+        $('.deputation-washing a.btn_driver', v.jqoDeputationCondition).removeClass('btn_driver_on');
+        $(this).addClass('btn_driver_on');
+      }
+    });
+    var jqoPickupDate = $('.deputation-pickup-time .date', v.jqoDeputationCondition);
+    var jqoPickupTime = $('.deputation-pickup-time .time', v.jqoDeputationCondition);
+    var jqoPickupDateLayer = $('.btn_driver_layer', jqoPickupDate);
+    var jqoPickupTimeLayer = $('.btn_driver_layer', jqoPickupTime);
+
+    var businessHours = null;
+    function buildPickupDateLayer()
+    {
+      if(!businessHours) { alert("no businessHours"); return; }
+      var dates = [];
+      for(var key in businessHours)
+      {
+        dates.push(key);
+      }
+      dates.sort();
+
+      jqoPickupDateLayer.empty();
+      for(var i=0; i<dates.length; i++)
+      {
+        var date = dates[i];
+        var bh = businessHours[date];
+        var dt = Date.fromFormat(date, 'Ymd');
+
+        var jqoItem = $('<a>');
+        jqoItem.data('yyyymmdd', dt.format("Ymd"));
+        if(bh.is_holiday) { jqoItem.addClass('disabled'); }
+        jqoItem.text(dt.format("n월j일")+'('+['일','월','화','수','목','금','토'][dt.getDay()]+')');
+        jqoItem.click(function() {
+          var jqoItem = $(this);
+          if(jqoItem.hasClass('disabled')) { return; }
+          selectPickupDate({text:jqoItem.text(),data:jqoItem.data('yyyymmdd')});
+        });
+        jqoPickupDateLayer.append(jqoItem);
+      }
+    }
+    function buildPickupTimeLayer()
+    {
+      jqoPickupTimeLayer.empty();
+
+      var dt = new Date(2000, 1, 1, 0, 0);
+      while(dt.getDate()== 1)
+      {
+        var jqoItem = $('<a>');
+        var hours = dt.getHours();
+        var hhmm = dt.format("Hi");
+        jqoItem.data('hhmm', hhmm);
+        jqoItem.addClass('hhmm-'+hhmm);
+        var ampm = hours<12?'오전':'오후';
+        jqoItem.text(ampm+' '+dt.format("g시 i분"));
+        jqoItem.click(function() {
+          var jqoItem = $(this);
+          if(jqoItem.hasClass('disabled')) { return; }
+          selectPickupTime({text:jqoItem.text(),data:jqoItem.data('hhmm')});
+        });
+        jqoPickupTimeLayer.append(jqoItem);
+        dt.setMinutes(dt.getMinutes()+30);
+      }
+    }
+    function updatePickupTimeLayer(date)
+    {
+      if(!businessHours) { alert("no businessHours"); return; }
+
+      $('a', jqoPickupTimeLayer).addClass('disabled');
+      if(date)
+      {
+        var bh = businessHours[date];
+        if(!bh) { alert("no businessHours for "+date); return; }
+
+        if(!bh.is_holiday)
+        {
+          JecarPlusPopup.loading(function(loaded) {
+            $.ajax({url:"/dev/jcar/api/deputation/charging/available_minutes", data:{ date:date }, success:function(response) {
+              var available_minutes = response.data;
+              var dt = new Date(2000, 1, 1, 0, 0);
+              while(dt.getDate()== 1)
+              {
+                var minutes = dt.getHours()*60+dt.getMinutes();
+                var hhmm = dt.format("Hi");
+                var is_available = false;
+                for(var i=0; i < available_minutes.length; i++)
+                {
+                  if(available_minutes[i][0] <= minutes && minutes < available_minutes[i][1])
+                  {
+                    is_available = true;
+                    break;
+                  }
+                }
+                is_available = is_available && bh.open_minutes <= minutes && minutes < bh.close_minutes;
+
+                if(is_available) { $('a.hhmm-'+hhmm, jqoPickupTimeLayer).removeClass('disabled'); }
+                dt.setMinutes(dt.getMinutes()+30);
+              }
+              loaded();
+            }});
+          });
+        }
+      }
+      jqoPickupTimeLayer.scrollTop(0);
+    }
+    function selectPickupDate(item)
+    {
+      var jqoButton = $('.btn_drivertime', jqoPickupDate);
+      if(item)
+      {
+        jqoButton.text(item.text);
+        jqoButton.data('yyyymmdd', item.data);
+        jqoButton.addClass('btn_drivertime_on');
+      }
+      else
+      {
+        jqoButton.data('yyyymmdd',null).removeClass('btn_drivertime_on').text('날짜선택');
+      }
+      jqoPickupDateLayer.removeClass('show');
+
+      updatePickupTimeLayer(item?item.data:null);
+      selectPickupTime(null); //v.jqoDeputationConditionSubmit.trigger('data-changed'); // is called on selectPickupTime
+    }
+    function selectPickupTime(item)
+    {
+      var jqoButton = $('.btn_drivertime', jqoPickupTime);
+      if(item)
+      {
+        jqoButton.text(item.text);
+        jqoButton.data('hhmm', item.data);
+        jqoButton.addClass('btn_drivertime_on');
+      }
+      else
+      {
+        jqoButton.data('hhmm', null).removeClass('btn_drivertime_on').text('시간선택');
+      }
+      jqoPickupTimeLayer.removeClass('show');
+      v.jqoDeputationConditionSubmit.trigger('data-changed');
+    }
+
+    v.jqoDeputationConditionSubmit.bind('data-changed', function() {
+      var enabled = true;
+      if(!$('.btn_drivertime', jqoPickupDate).hasClass('btn_drivertime_on') || !$('.btn_drivertime', jqoPickupTime).hasClass('btn_drivertime_on'))
+      {
+        enabled = false;
+      }
+      if(!$('.page-main').data('charging-deputation-zone-status'))
+      {
+        enabled = false;
+      }
+
+      if(enabled)
+      {
+        v.jqoDeputationConditionSubmit.removeClass('btn_search_inert');
+      }
+      else
+      {
+        v.jqoDeputationConditionSubmit.addClass('btn_search_inert');
+      }
+    });
+    $('.btn_drivertime', jqoPickupDate).click(function() {
+      var jqoLayer = $('.btn_driver_layer', jqoPickupDate);
+      $('.btn_driver_layer', jqoPickupTime).removeClass('show');
+      if(jqoLayer.hasClass('show'))
+      {
+        jqoLayer.removeClass('show');
+      }
+      else
+      {
+        jqoLayer.addClass('show');
+      }
+    });
+    $('.btn_drivertime', jqoPickupTime).click(function() {
+      var jqoLayer = $('.btn_driver_layer', jqoPickupTime);
+      $('.btn_driver_layer', jqoPickupDate).removeClass('show');
+      if(jqoLayer.hasClass('show'))
+      {
+        jqoLayer.removeClass('show');
+      }
+      else
+      {
+        jqoLayer.addClass('show');
+      }
+    });
+
+    v.jqoDeputationConditionSubmit.click(function() {
+      if($(this).hasClass('btn_search_inert')) { return; }
+
+      JecarPlusPopup.loading(function(loaded) {
+        var routeAddressLatlng = v.getRouteAddressLatLng();
+        if(!routeAddressLatlng.departure || !routeAddressLatlng.arrival)
+        {
+          loaded();
+          JecarPlusPopup.alert("현재위치가 확인되지 않습니다.");
+          return;
+        }
+
+        var data_reserve = {};
+        var deputation_reserve = {};
+
+        deputation_reserve.mycar = v.mycar;
+        data_reserve.mycar = deputation_reserve.mycar.id;
+        deputation_reserve.creditcard = v.creditcards[0];
+        data_reserve.paycard = deputation_reserve.creditcard.id;
+
+        var deferredChain = new commonDeferredChain({is_log:true, desc:'charging deputation prepare'});
+        // pickup location
+        deferredChain.addChain(function(deferred) {
+          data_reserve.pickup_lat = routeAddressLatlng.departure[0];
+          data_reserve.pickup_lng = routeAddressLatlng.departure[1];
+          if(routeAddressLatlng.departure_item)
+          {
+            data_reserve.pickup_addr = routeAddressLatlng.departure_item._internal_address;
+            deferred.resolve();
+          }
+          else
+          {
+            daum_geocoder.coord2Address(data_reserve.pickup_lng, data_reserve.pickup_lat, function(response, status) {
+              if(response && response.length)
+              {
+                if(response[0].road_address)
+                {
+                  data_reserve.pickup_addr = response[0].road_address.address_name;
+                }
+                else if(response[0].address)
+                {
+                  data_reserve.pickup_addr = response[0].address.address_name;
+                }
+              }
+
+              if(!data_reserve.pickup_addr)
+              {
+                data_reserve.pickup_addr = data_reserve.pickup_lat+','+data_reserve.pickup_lng;
+              }
+              deferred.resolve();
+            });
+          }
+        }, {desc:'pickup location'});
+        // return location
+        deferredChain.addChain(function(deferred) {
+          data_reserve.return_lat = routeAddressLatlng.arrival[0];
+          data_reserve.return_lng = routeAddressLatlng.arrival[1];
+          if(routeAddressLatlng.arrival_item)
+          {
+            data_reserve.return_addr = routeAddressLatlng.arrival_item._internal_address;
+            deferred.resolve();
+          }
+          else
+          {
+            daum_geocoder.coord2Address(data_reserve.return_lng, data_reserve.return_lat, function(response, status) {
+              if(response && response.length)
+              {
+                if(response[0].road_address)
+                {
+                  data_reserve.return_addr = response[0].road_address.address_name;
+                }
+                else if(response[0].address)
+                {
+                  data_reserve.return_addr = response[0].address.address_name;
+                }
+              }
+
+              if(!data_reserve.return_addr)
+              {
+                data_reserve.return_addr = data_reserve.return_lat+','+data_reserve.return_lng;
+              }
+              deferred.resolve();
+            });
+          }
+        }, {desc:'return location'});
+
+        // pickup time
+        deferredChain.addChain(function(deferred) {
+          data_reserve.pickup_time = parseInt(Date.fromFormat(''+$('.deputation-pickup-time .date .btn_drivertime', v.jqoDeputationCondition).data('yyyymmdd')+$('.deputation-pickup-time .time .btn_drivertime', v.jqoDeputationCondition).data('hhmm')+'00', 'YmdHis').getTime()/1000);
+          deferred.resolve();
+        }, {desc:'pickup time'});
+
+        // charging type
+        deferredChain.addChain(function(deferred) {
+          data_reserve.isfast = $('.deputation-charger-speed .btn_driver_on', v.jqoDeputationCondition).hasClass('charger-speed-fast')?1:0;
+          deferred.resolve();
+        }, {desc:'charging type'});
+
+        // washing option
+        deferredChain.addChain(function(deferred) {
+          var jqoWashing = $('.deputation-washing .btn_driver_on', v.jqoDeputationCondition);
+          data_reserve.washing = jqoWashing.length?jqoWashing.hasClass('washing-basic')?1:2:0;
+          deferred.resolve();
+        }, {desc:'washing option'});
+
+        // bill
+        deferredChain.addChain(function(deferred) {
+          deputation_reserve.bill_detail = null;
+          $.ajax({url:"/dev/jcar/api/deputation/charging/reserve/bill", type:'post', data:data_reserve, success:function(response) {
+            if(response && response.data)
+            {
+              deputation_reserve.bill_detail = response.data;
+              deferred.resolve();
+            }
+            else
+            {
+              JecarPlusPopup.alert("요금확인에 오류가 발생하였습니다.");
+              deferred.reject();
+            }
+          }});
+        }, {desc:'bill detail'});
+
+        // update content
+        deferredChain.addChain(function(deferred) {
+          $('.pickup_addr .content', v.jqoDeputationReserve).text(data_reserve.pickup_addr);
+          $('.return_addr .content', v.jqoDeputationReserve).text(data_reserve.return_addr);
+          var dtPickup = new Date(data_reserve.pickup_time*1000);
+          var txtAMPM = dtPickup.getHours() < 12?'오전':'오후';
+          $('.pickup_time .content', v.jqoDeputationReserve).text(dtPickup.format("Y-m-d / "+txtAMPM+" g시 i분"));
+          var reserve_detail = '';
+          reserve_detail += data_reserve.isfast?'급속충전('+deputation_reserve.mycar.charger.fast+')':'완속충전('+deputation_reserve.mycar.charger.slow+')';
+          switch(data_reserve.washing)
+          {
+          case 0:
+            reserve_detail += ' / 세차 선택안함';
+            break;
+          case 1:
+            reserve_detail += ' / 기본세차';
+            break;
+          case 2:
+            reserve_detail += ' / 고급세차';
+            break;
+          default:
+            alert('invalid washing: '+data_reserve.washing);
+            deferred.reject();
+            return;
+          }
+          $('.reserve_detail .content', v.jqoDeputationReserve).text(reserve_detail);
+          $('.creditcard .content', v.jqoDeputationReserve).text('['+deputation_reserve.creditcard.brand+'] '+deputation_reserve.creditcard.number);
+          $('.mycar .content', v.jqoDeputationReserve).text(deputation_reserve.mycar.maker + ' / '+deputation_reserve.mycar.model);
+          $('.paynum .bignum', v.jqoDeputationReserve).text(commonUtil.insertComma(deputation_reserve.bill_detail.net_price));
+          v.jqoDeputationReserve.data('reserve', data_reserve);
+          $('.page-main').addClass('on-deputation-reserve');
+
+          deferred.resolve();
+        }, {desc:'update content'});
+
+        deferredChain.addChain(function(deferred) {
+          loaded();
+          deferred.resolve();
+        }, {desc: 'loaded'});
+      });
+    });
+
+    $('.btn_search', v.jqoDeputationReserve).click(function(){
+      var data_reserve = v.jqoDeputationReserve.data('reserve');
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/deputation/charging/reserve/request", type:'post', data:data_reserve, success:function(response) {
+          if(response && response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+          {
+            JecarPlusMain.changeTab('deputation', {force:true});
+          }
+          else
+          {
+            loaded();
+            JecarPlusPopup.alert("결제에 오류가 발생하였습니다.<br/>("+response.errCode+(response.errMsg?":"+response.errMsg:"")+")");
+          }
+        }});
+      });
+    });
+
+    JecarPlusMain.bind('pre-tab-change', function(tabEvent) {
+      if(tabEvent.tab == 'deputation')
+      {
+        $('.page-main').removeClass('on-deputation-reserve');
+        if(!v.user)
+        {
+          JecarPlusPopup.confirm('로그인 후 이용 가능합니다', function(is_ok) {
+            if(is_ok) {
+              JecarPlusPage.load('login');
+            }
+          }, {txt_cancel:'나중에', txt_ok:'로그인'});
+          tabEvent.invalid = true;
+          return;
+        }
+
+        JecarPlusPopup.loading(function(loaded) {});
+
+        var deputation_mycar = null;
+        var deferredChain = new commonDeferredChain({is_log:true, desc:'pre-tab-change:deputation'});
+        deferredChain.addChain(function(deferred) {
+          $.ajax({url:"/dev/jcar/api/deputation/charging/status", success:function(response) {
+            // TODO: app_api_charging_deputation_status HOWTO???
+            deferred.resolve();
+          }});
+        }, {desc:'status'});
+        deferredChain.addChain(function(deferred) {
+          // load mycar
+          v.mycar = null;
+          $.ajax({url:"/dev/jcar/api/plus/mycar", success: function(response) {
+            if(response && response.data && response.data.id)
+            {
+              v.mycar = response.data;
+              deputation_mycar = v.mycar;
+              deferred.resolve();
+            }
+            else
+            {
+              JecarPlusPopup.alert('차량등록 후 이용 가능합니다');
+              deferred.reject();
+            }
+          }});
+        }, {desc:'mycar'});
+        deferredChain.addChain(function(deferred) {
+          v.creditcards = null;
+          $.ajax({url:"/dev/jcar/api/pay/card/list", success: function(response) {
+            if(response && response.data && response.data.length)
+            {
+              v.creditcards = response.data;
+              deferred.resolve();
+            }
+            else
+            {
+              JecarPlusPopup.alert('카드등록 후 이용 가능합니다');
+              deferred.reject();
+            }
+          }});
+        }, {desc:'creditcard'});
+
+        deferredChain.addChain(function(deferred) {
+          var dates = [];
+          var dt = new Date();
+          for(var i=0; i<14; i++)
+          {
+            dates.push(dt.format("Ymd"));
+            dt.setDate(dt.getDate()+1);
+          }
+          $.ajax({url:"/dev/jcar/api/deputation/charging/business_hours", data:{date:dates}, traditional:true, success: function(response) {
+            if(!response || !response.data)
+            {
+              JecarPlusPopup.alert('통신 오류가 발생하였습니다.');
+              deferred.reject();
+            }
+            else
+            {
+              businessHours = response.data;
+              deferred.resolve();
+            }
+          }});
+        }, {desc:'business-horus'});
+
+        deferredChain.addChain(function(deferred) {
+          $('.deputation-car .carname', v.jqoDeputationCondition).val(deputation_mycar.model);
+          $('.deputation-charger-speed a.btn_driver.charger-speed-fast').trigger('click');
+          $('.deputation-washing a.btn_driver', v.jqoDeputationCondition).removeClass('btn_driver_on');
+          $('.deputation-washing a.btn_driver.washing-basic', v.jqoDeputationCondition).addClass('btn_driver_on');
+          buildPickupDateLayer();
+          buildPickupTimeLayer();
+          jqoPickupDateLayer.removeClass('show');
+          jqoPickupTimeLayer.removeClass('show');
+          selectPickupDate(null);
+          selectPickupTime(null);
+          v.jqoDeputationConditionSubmit.trigger('data-changed');
+
+          deferred.resolve();
+        }, {desc:'update'});
+
+        deferredChain.addChain(function(deferred) {
+          JecarPlusPopup.loading(function(loaded) {loaded();});
+          deferred.resolve();
+        }, {desc:'loaded'});
+        tabEvent.deferred = deferredChain.getDeferred();
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-main tab-deputation'});
+
+  // page-main tab-emergency
+  deferredChain.addChain(function(deferred) {
+    JecarPlusMain.bind('pre-tab-change', function(tabEvent) {
+      if(tabEvent.tab ==  'emergency')
+      {
+        JecarPlusPopup.alert('서비스 준비중 입니다.');
+        tabEvent.invalid = true;
+        return;
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-main tab-emergency'});
+
+  // page-route-link
+  deferredChain.addChain(function(deferred) {
+    $('.page-route-link .link-kakaonavi').click(function() {
+      var evstation = v.evstationMarkers.get_detail_evstation();
+      if(!evstation) { alert("no detail"); return; }
+
+      Kakao.Navi.start({
+        name: evstation.name,
+        x: evstation.latlng[1],
+        y: evstation.latlng[0],
+        coordType: 'wgs84'
+      });
+    });
+
+    deferred.resolve();
+  }, {desc:'page-route-link'});
+
+  // page-route-address
+  deferredChain.addChain(function(deferred) {
+    var routeAddressTarget = null;
+    var jqoRouteAddressKeyword = $('.page-route-address input.keyword');
+    var jqoRouteAddressItems = $('.page-route-address .address-list');
+
+    function storeRouteAddressItem(item)
+    {
+      var items = loadRouteAddressItems().filter(function(o) {
+        if(o.road_address_name)
+        {
+          return o.id != item.id;
+        }
+        return !item.road_address || (o.road_address.address_name != item.road_address.address_name);
+      });
+      if(items.length >= 5) {
+        items = items.splice(0,4);
+      }
+      items.unshift(item);
+      localStorage.setItem('address_history', JSON.stringify(items));
+    }
+    function loadRouteAddressItems()
+    {
+      try {
+        var value = localStorage.getItem('address_history');
+        var items = JSON.parse(value);
+        if(items.length)
+        {
+          return items;
+        }
+      } catch(e) {
+      }
+      return [];
+    }
+
+    function onClickRouteAddressItem()
+    {
+      var jqoItem = $(this);
+      var item = jqoItem.data('item');
+      if(item) { storeRouteAddressItem(item); }
+      JecarPlusPage.load('main', {route_address_target:routeAddressTarget, route_address_item:item});
+    }
+    function clearRouteAddressItems()
+    {
+      jqoRouteAddressItems.empty();
+    }
+    function addRouteAddressItem(item)
+    {
+      var jqoItem = $('<div>');
+      jqoItem.addClass('address-item');
+
+      if(item)
+      {
+        if(item.place_name) // by daum_places.keywordSearch
+        {
+          item._internal_main_text = item.place_name;
+          item._internal_sub_text = item.road_address_name;
+          item._internal_address = item.road_address_name;
+        }
+        else
+        {
+          item._internal_main_text = item.road_address.address_name;
+          item._internal_sub_text = item.address.address_name;
+          item._internal_address = item.road_address.address_name;
+        }
+      }
+
+      jqoItem.data('item', item);
+
+      var html = '';
+      html += '<div class="address1line">';
+      html += '<div class="infoicon"><img src="/dev/jcar/static/plus/image/search_address.png"></div>';
+      html += '<div style="padding-left:24px;"><a href="javascript:"><div class="infoinbox"></div><br/><span class="txt12"></span></a></div>';
+      html += '</div>';
+      jqoItem.html(html);
+
+      $('.infoinbox', jqoItem).text(item?item._internal_main_text:'현재위치');
+      $('.txt12', jqoItem).text(item?item._internal_sub_text:'');
+      jqoItem.click(onClickRouteAddressItem);
+
+      jqoRouteAddressItems.append(jqoItem);
+    }
+
+    jqoRouteAddressKeyword.keypress(function(event) {
+      if(event.which == 13) { $('.page-route-address .button-search').trigger('click'); }
+    });
+
+    $('.page-route-address .button-search').click(function() {
+      var kw = jqoRouteAddressKeyword.val();
+      if(!kw)
+      {
+        JecarPlusPopup.alert('검색어를 입력해주세요', function() { jqoRouteAddressKeyword.focus(); }); return;
+      }
+      if(kw == '현재위치')
+      {
+        // HOW TO??
+      }
+      JecarPlusPopup.loading(function(loaded) {
+        clearRouteAddressItems();
+        daum_places.keywordSearch(kw, function(response, status) {
+          if(!response || !response.length)
+          {
+            daum_geocoder.addressSearch(kw, function(response, status) {
+              if(response && response.length)
+              {
+                for(var i=0; i<response.length; i++)
+                {
+                  addRouteAddressItem(response[i]);
+                }
+              }
+              loaded();
+            });
+          }
+          else
+          {
+            for(var i=0; i<response.length; i++)
+            {
+              addRouteAddressItem(response[i]);
+            }
+            loaded();
+          }
+        });
+      });
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'route-address')
+      {
+        routeAddressTarget = opts.target;
+        $('.page-route-address .infotit').text(opts.tit);
+        jqoRouteAddressKeyword.val(opts.keyword);
+
+        clearRouteAddressItems();
+
+        //if(v.currLatLng)
+        {
+          addRouteAddressItem(null);
+        }
+
+        var items = loadRouteAddressItems();
+        for(var i=0; i<items.length; i++)
+        {
+          addRouteAddressItem(items[i]);
+        }
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-route-address'});
+
+  // page-mycar-edit
+  deferredChain.addChain(function(deferred) {
+    function update_mycar_maker_model(maker, model)
+    {
+      $('.page-mycar-edit').data('maker', maker);
+      $('.page-mycar-edit').data('model', model);
+      if(model && maker)
+      {
+        $('.page-mycar-edit .car-maker-model .infoinbox').text(maker + ' / '+model);
+      }
+      else
+      {
+        $('.page-mycar-edit .car-maker-model .infoinbox').text('제조사, 모델명 선택');
+      }
+    }
+    function update_mycar_charger_type_fast(ct)
+    {
+      $('.page-mycar-edit').data('ctfast', ct);
+      if(ct)
+      {
+        $('.page-mycar-edit .charger-type-fast .infoinbox').text(ct);
+        $('.page-mycar-edit .charger-type-fast .btn_mycar_layer .infoin').val('');
+      }
+      else
+      {
+        $('.page-mycar-edit .charger-type-fast .infoinbox').text('급속충전');
+        $('.page-mycar-edit .charger-type-fast .btn_mycar_layer .infoin').val('');
+      }
+    }
+    function update_mycar_charger_type_slow(ct)
+    {
+      $('.page-mycar-edit').data('ctslow', ct);
+      if(ct)
+      {
+        $('.page-mycar-edit .charger-type-slow .infoinbox').text(ct);
+        $('.page-mycar-edit .charger-type-slow .btn_mycar_layer .infoin').val('');
+      }
+      else
+      {
+        $('.page-mycar-edit .charger-type-slow .infoinbox').text('완속충전');
+        $('.page-mycar-edit .charger-type-slow .btn_mycar_layer .infoin').val('');
+      }
+    }
+
+    $('.page-mycar-edit .charger-type .loginform1line a').click(function() {
+      var jqoLayer = $(this).parentsUntil('.wrap_content', '.charger-type').children('.btn_mycar_layer');
+      if(jqoLayer.hasClass('show'))
+      {
+        jqoLayer.removeClass('show');
+      }
+      else
+      {
+        jqoLayer.addClass('show');
+      }
+    });
+    $('.page-mycar-edit .charger-type-fast .btn_mycar_layer a').click(function() {
+      $('.page-mycar-edit .charger-type-fast .btn_mycar_layer').removeClass('show');
+      update_mycar_charger_type_fast($(this).text());
+    });
+    $('.page-mycar-edit .charger-type-fast .btn_mycar_layer .infoin').blur(function() {
+      $('.page-mycar-edit .charger-type-fast .btn_mycar_layer').removeClass('show');
+      update_mycar_charger_type_fast($(this).val());
+    });
+    $('.page-mycar-edit .charger-type-slow .btn_mycar_layer a').click(function() {
+      $('.page-mycar-edit .charger-type-slow .btn_mycar_layer').removeClass('show');
+      update_mycar_charger_type_slow($(this).text());
+    });
+    $('.page-mycar-edit .charger-type-slow .btn_mycar_layer .infoin').blur(function() {
+      $('.page-mycar-edit .charger-type-slow .btn_mycar_layer').removeClass('show');
+      update_mycar_charger_type_slow($(this).val());
+    });
+
+    $('.page-mycar-edit .btn_login').click(function() {
+      var data = {
+        cmaker: $('.page-mycar-edit').data('maker'),
+        cmodel: $('.page-mycar-edit').data('model'),
+        ctfast: $('.page-mycar-edit').data('ctfast'),
+        ctslow: $('.page-mycar-edit').data('ctslow'),
+        cnumber: $('.page-mycar-edit .car-number .infoin').val()
+      };
+      if(!data.cmaker || !data.cmodel) { JecarPlusPopup.alert("제조사/모델을 선택해주세요"); return; }
+      if(!data.ctfast) { JecarPlusPopup.alert("급속충전 방식을 선택해주세요"); return; }
+      if(!data.ctslow) { JecarPlusPopup.alert("완속충전 방식을 선택해주세요"); return; }
+      if(!data.cnumber) { JecarPlusPopup.alert("차량번호을 입력해주세요"); return; }
+
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/plus/mycar", type:'post', data:data, success:function(response) {
+          loaded();
+          if(response && response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+          {
+            JecarPlusPage.load('main');
+          }
+          else
+          {
+            JecarPlusPopup.alert("차량등록에 오류가 발생했습니다.");
+          }
+        }});
+      });
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'mycar-edit')
+      {
+        if(oldpage.substr(0,11) == 'mycar-edit-')
+        {
+          if(opts && opts.maker && opts.model)
+          {
+            update_mycar_maker_model(opts.maker, opts.model);
+          }
+        }
+        else
+        {
+          JecarPlusPopup.loading(function(loaded) {
+            $.ajax({url:"/dev/jcar/api/plus/mycar", success: function(response) {
+              if(response && response.data)
+              {
+                var mycar = response.data;
+                $('.page-mycar-edit').data('mycar', mycar);
+
+                update_mycar_maker_model(mycar.maker, mycar.model);
+                update_mycar_charger_type_fast(mycar.charger.fast);
+                update_mycar_charger_type_slow(mycar.charger.slow);
+                $('.page-mycar-edit .car-number .infoin').val(mycar.number);
+              }
+              else if(response.errCode == commonConsts.JSON_ERRCODE_NOTFOUND)
+              {
+                $('.page-mycar-edit').data('mycar', {});
+
+                update_mycar_maker_model();
+                update_mycar_charger_type_fast();
+                update_mycar_charger_type_slow();
+                $('.page-mycar-edit .car-number .infoin').val('');
+              }
+              else {
+                alert("error");
+              }
+              loaded();
+            }});
+          });
+        }
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-mycar-edit'});
+
+  var predefinedCarMakerModels = [
+    {
+      maker: '현대자동차',
+      models: [
+        '아이오닉 EV',
+        '아이오닉 플러그인',
+        '코나 EV',
+        '코나 EV(경제형)',
+        '넥쏘',
+        '투싼 FCEV',
+        null
+      ]
+    },
+    {
+      maker: '기아자동차',
+      models: [
+        '니로 EV',
+        '니로 플러그인',
+        '쏘울 EV',
+        '레이 EV',
+        null
+      ]
+    },
+    {
+      maker: '르노삼성',
+      models: [
+        'SM3 Z.E',
+        'SM3 Z.E(18년)',
+        '트위지',
+        null
+      ]
+    },
+    {
+      maker: '한국GM',
+      models: [
+        '볼트EV',
+        null
+      ]
+    },
+    {
+      maker: '닛산',
+      models: [
+        '리프',
+        null
+      ]
+    },
+    {
+      maker: 'BMW',
+      models: [
+        'i3',
+        'i3(18년)',
+        null
+      ]
+    },
+    {
+      maker: '테슬라',
+      models: [
+        '모델S 75D',
+        '모델S 90D',
+        '모델S 100D',
+        '모델S P100D',
+        null
+      ]
+    },
+    {
+      maker: '세미시스코',
+      models: [
+        'D2',
+        null
+      ]
+    },
+    {
+      maker: '대창모터스',
+      models: [
+        '다니고',
+        null
+      ]
+    },
+    null
+  ];
+  // page-mycar-edit-car-maker
+  deferredChain.addChain(function(deferred) {
+    $('.page-mycar-edit-car-maker .car-maker-custom input').focus(function() {
+      $('.page-mycar-edit-car-maker .car-maker-list .btn_carselect').removeClass('selected');
+    });
+    $('.page-mycar-edit-car-maker .btn_login').click(function() {
+      var jqoSelected = $('.page-mycar-edit-car-maker .car-maker-list .btn_carselect.selected');
+      if(jqoSelected.length > 1) { alert("invalid selected"); return; }
+
+      var maker = jqoSelected.text();
+      var models = [];
+      if(maker) { models = jqoSelected.data('models'); }
+      else { maker = $('.page-mycar-edit-car-maker .car-maker-custom input').val(); }
+
+      if(!maker) { JecarPlusPopup.alert("제조사를 선택하거나 입력해주세요"); return; }
+      JecarPlusPage.load('mycar-edit-car-model', {maker:maker, models:models});
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'mycar-edit-car-maker')
+      {
+        var jqoCarMakers = $('.page-mycar-edit-car-maker .car-maker-list');
+        jqoCarMakers.empty();
+        $('.page-mycar-edit-car-maker .car-maker-custom input').val('');
+        for(var i=0; i<predefinedCarMakerModels.length; i++)
+        {
+          var cmm = predefinedCarMakerModels[i];
+          if(!cmm) { continue; }
+          var jqoItem = $('<a href="javascript:">');
+          jqoItem.addClass('btn_carselect');
+          jqoItem.data('models', cmm.models);
+          jqoItem.text(cmm.maker);
+          jqoCarMakers.append(jqoItem);
+        }
+        $('.page-mycar-edit-car-maker .car-maker-list .btn_carselect').click(function() {
+          $('.page-mycar-edit-car-maker .car-maker-list .btn_carselect').removeClass('selected');
+          $('.page-mycar-edit-car-maker .car-maker-custom input').val('');
+          $(this).addClass('selected');
+        });
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-mycar-edit-car-maker'});
+
+  // page-mycar-edit-car-model
+  deferredChain.addChain(function(deferred) {
+    $('.page-mycar-edit-car-model .car-model-custom input').focus(function() {
+      $('.page-mycar-edit-car-model .car-model-list .btn_carselect').removeClass('selected');
+    });
+    $('.page-mycar-edit-car-model .btn_login').click(function() {
+      var jqoSelected = $('.page-mycar-edit-car-model .car-model-list .btn_carselect.selected');
+      if(jqoSelected.length > 1) { alert("invalid selected"); return; }
+
+      var maker = $('.page-mycar-edit-car-model').data('maker');
+      var model = jqoSelected.text();
+      if(!model) { model = $('.page-mycar-edit-car-model .car-model-custom input').val(); }
+
+      if(!model) { JecarPlusPopup.alert("모델을 선택하거나 입력해주세요"); return; }
+
+      JecarPlusPage.load('mycar-edit', {maker:maker, model:model});
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'mycar-edit-car-model')
+      {
+        if(!opts.maker) { alert("invalid situation"); return; }
+        $('.page-mycar-edit-car-model').data('maker', opts.maker);
+        $('.page-mycar-edit-car-model .car-maker').text(opts.maker);
+
+        var jqoCarModels = $('.page-mycar-edit-car-model .car-model-list');
+        jqoCarModels.empty();
+        $('.page-mycar-edit-car-model .car-model-custom input').val('');
+        for(var i=0; i<opts.models.length; i++)
+        {
+          var model = opts.models[i];
+          if(!model) { continue; }
+          var jqoItem = $('<a href="javascript:">');
+          jqoItem.addClass('btn_carselect');
+          jqoItem.text(model);
+          jqoCarModels.append(jqoItem);
+        }
+        $('.page-mycar-edit-car-model .car-model-list .btn_carselect').click(function() {
+          $('.page-mycar-edit-car-model .car-model-list .btn_carselect').removeClass('selected');
+          $('.page-mycar-edit-car-model .car-model-custom input').val('');
+          $(this).addClass('selected');
+        });
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-mycar-edit-car-model'});
+
+  // page-guide
+  deferredChain.addChain(function(deferred) {
+    $('.page-guide .gnb .leftbtn a').click(function() {
+      var oldpage = $('.page-guide').data('oldpage');
+      JecarPlusPage.load(oldpage?oldpage:'main');
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'guide')
+      {
+        $('.page-guide').data('oldpage', oldpage);
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-guide'});
+
+  // page-customer-support
+  deferredChain.addChain(function(deferred) {
+    $('.page-customer-support .gnb .leftbtn a').click(function() {
+      var oldpage = $('.page-customer-support').data('oldpage');
+      JecarPlusPage.load(oldpage?oldpage:'main');
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'customer-support')
+      {
+        $('.page-customer-support').data('oldpage', oldpage);
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-customer-support'});
+
+  // page-user-info
+  deferredChain.addChain(function(deferred) {
+    $('.page-user-info .gnb .leftbtn a').click(function() {
+      var oldpage = $('.page-user-info').data('oldpage');
+      JecarPlusPage.load(oldpage?oldpage:'main');
+    });
+    $('.page-user-info .btn_login').click(function() {
+      var form = $('.page-user-info #user-info-form')[0];
+      var data = new FormData(form);
+      if(!data.get('name')) { JecarPlusPopup.alert("이름을 입력해주세요"); return; }
+      if(data.get('newpass'))
+      {
+        if(!data.get('newpass_chk')) { JecarPlusPopup.alert("비밀번호 재입력을 입력해주세요"); return; }
+        if(data.get('newpass') != data.get('newpass_chk')) { JecarPlusPopup.alert("비밀번호/재입력이 일치하지 않습니다"); return; }
+        // TODO: newpass restrict check
+      }
+      if(!data.get('mobile_phone')) { JecarPlusPopup.alert("휴대전화를 입력해주세요"); return; }
+      // TODO: 휴대전화 인증하기
+
+      $.ajax({url:form.action, type:form.method, data:data, processData:false, contentType:false, success: function(rst) {
+        if(rst && rst.errCode == 0) {
+          $('.page-user-info .gnb .leftbtn a').trigger('click');
+        }
+        else
+        {
+          JecarPlusPopup.alert("회원정보 수정에 오류가 발생하였습니다.");
+        }
+      }});
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'user-info')
+      {
+        $('.page-user-info').data('oldpage', oldpage);
+        $('.page-user-info .user-info-name input').val(v.user.name);
+        $('.page-user-info .user-info-newpass input').val('');
+        $('.page-user-info .user-info-newpass-chk input').val('');
+        $('.page-user-info .user-info-mobile-phone input').val(v.user.mobile_phone);
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-user-info'});
+
+  // page-creditcard-list
+  deferredChain.addChain(function(deferred) {
+    var jqoCreditCardList = $('.page-creditcard-list .creditcard-list');
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'creditcard-list')
+      {
+        JecarPlusPopup.loading(function(loaded) {
+          $.ajax({url:"/dev/jcar/api/pay/card/list", success: function(response) {
+            jqoCreditCardList.empty();
+            if(!response || response.errCode)
+            {
+              alert("error");
+              return;
+            }
+            if(response.data.length)
+            {
+              for(var i=0; i<response.data.length; i++)
+              {
+                var item = response.data[i];
+                var jqoItem = $('<div>');
+                jqoItem.addClass('cardlist1line');
+                jqoItem.css({'marginTop':'10px'});
+                jqoItem.data('item', item);
+                if(item.is_main) { jqoItem.addClass('main'); }
+                var html = '';
+                if(item.is_main) {
+                  html += '<div class="infocheck"><img src="/dev/jcar/static/plus/image/check_w_on.png"></div>';
+                }
+                else
+                {
+                  html += '<div class="infocheck"><img src="/dev/jcar/static/plus/image/check_w_off.png"></div>';
+                }
+                html += '<div class="infoinbox" style="padding-left:32px;">';
+                html += '['+$('<div>').text(item.brand).html()+']';
+                html += '<span class="icon_card" style="margin-left:8px;">기본카드</span>';
+                html += '<br/>';
+                html += $('<div>').text(item.number).html();
+                html += '<br/>';
+                html += '<span class="date"></span>';
+                html += '</div>';
+                html += '<div class="smallbtn"><a href="javascript:" class="btn_delete">삭제</a></div>';
+                jqoItem.html(html);
+                var dtCreated = new Date(item.created*1000);
+                $('.date', jqoItem).text(dtCreated.format("Y-m-d H:i"));
+                jqoCreditCardList.append(jqoItem);
+              }
+              $('.cardlist1line:not(.main) .infocheck', jqoCreditCardList).click(function() {
+                var item = $(this).parentsUntil('.creditcard-list', '.cardlist1line').data('item');
+                JecarPlusPopup.loading(function(loaded) {
+                  $.ajax({url:"/dev/jcar/api/pay/card/set/main", type:'post', data:{id:item.id}, success:function() {
+                    loaded();
+                    JecarPlusPage.load('creditcard-list', {reload:true});
+                  }});
+                });
+              });
+              $('.cardlist1line .btn_delete', jqoCreditCardList).click(function() {
+                var item = $(this).parentsUntil('.creditcard-list', '.cardlist1line').data('item');
+                JecarPlusPopup.loading(function(loaded) {
+                  $.ajax({url:"/dev/jcar/api/pay/card/delete", type:'post', data:{id:item.id}, success:function() {
+                    loaded();
+                    JecarPlusPage.load('creditcard-list', {reload:true});
+                  }});
+                });
+              });
+              loaded();
+            }
+            else
+            {
+              loaded();
+              JecarPlusPage.load('creditcard-register', {is_new:true});
+            }
+          }});
+        });
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-creditcard-list'});
+
+  // page-creditcard-register
+  deferredChain.addChain(function(deferred) {
+    $('.page-creditcard-register .input-type .button-tab').click(function() {
+      $('.page-creditcard-register .input-type .button-tab').not(this).removeClass('tab_card_on').addClass('tab_card_off');
+      $(this).removeClass('tab_card_off').addClass('tab_card_on');
+
+      var pageTypeClasses = commonUtil.findClass($('.page-creditcard-register')[0], /type-[^\s]+/);
+      $('.page-creditcard-register').removeClass(pageTypeClasses.join(' '));
+      var typeClass = commonUtil.findClass(this, /type-[^\s]+/)[0];
+      $('.page-creditcard-register').addClass(typeClass);
+    });
+    $('.page-creditcard-register .btn_login').click(function() {
+      var pageTypeClasses = commonUtil.findClass($('.page-creditcard-register')[0], /type-[^\s]+/);
+      if(pageTypeClasses.length != 1) { alert("invalid situation: type"); return; }
+      var data = {
+        type: pageTypeClasses[0].substr(5),
+      };
+      if(!data.type) { alert("invalid situation: no type"); return; }
+      data = $.extend(true, data, {
+        name: $('.page-creditcard-register .input-name input').val(),
+        number: $('.page-creditcard-register .input-number input').val().replace(/-/g, ''),
+        expire: $('.page-creditcard-register .input-expire input').val().replace(/\s/g, ''),
+        pass: $('.page-creditcard-register .input-pass input').val(),
+        regnum: $('.page-creditcard-register .input-regnum.type-'+data.type+' input').val().replace(/-/g, '')
+      });
+
+      if(!data.name) { JecarPlusPopup.alert("이름을 입력하세요."); return; }
+      if(data.number.replace(/[0-9]/g, '') || (data.number.length != 15 && data.number.length != 16)) { JecarPlusPopup.alert("카드번호는 숫자 16자리(아멕스는 15자리)를 입력하세요"); return; }
+      var m = data.expire.match(/^([0-9]{2})\/([0-9]{2})$/);
+      data.expire = m?('20'+m[2]+m[1]):null;
+      if(!data.expire || parseInt(data.expire)%100 == 0 || parseInt(data.expire)%100 > 12) { JecarPlusPopup.alert("유효기간을 올바르게 입력하세요.(예. 01/20)"); return; }
+      if(data.pass.replace(/[0-9]/g, '') || (data.pass.length != 2)) { JecarPlusPopup.alert("비밀번호는 앞자리 2자리만 입력하세요."); return; }
+      switch(data.type)
+      {
+      case 'personal':
+        if(data.regnum.replace(/[0-9]/g, '') || (data.regnum.length != 6)) { JecarPlusPopup.alert("생년월일은 6자리의 숫자로 입력하세요"); return; }
+        break;
+      case 'business':
+        if(data.regnum.replace(/[0-9]/g, '') || (data.regnum.length != 10)) { JecarPlusPopup.alert("사업자번호는 10자리의 숫자로 입력하세요"); return; }
+        break;
+      default:
+        alert("invalid situation??");
+        return;
+      }
+
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/pay/card/add", type:'post', data:data, success:function(response) {
+          if(response && response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+          {
+            loaded();
+            JecarPlusPage.load('creditcard-list');
+          }
+          else
+          {
+            loaded();
+            JecarPlusPopup.alert("카드등록 오류");
+          }
+        }});
+      });
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'creditcard-register')
+      {
+        opts = $.extend(true, {}, opts);
+        $('.page-creditcard-register').data('load_opts', opts);
+        $('.page-creditcard-register input').val('');
+        $('.page-creditcard-register .input-type .type-personal').trigger('click');
+      }
+    });
+    $('.page-creditcard-register .gnb .leftbtn a').click(function() {
+      if($('.page-creditcard-register').data('load_opts').is_new)
+      {
+        JecarPlusPage.load('main');
+      }
+      else
+      {
+        JecarPlusPage.load('creditcard-list');
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-creditcard-register'});
+
+  // page-usage-history
+  deferredChain.addChain(function(deferred) {
+    var jqoUsageHistoryList = $('.page-usage-history .usage-history-list');
+    var currPage = 0;
+    function clearUsageHistory()
+    {
+      jqoUsageHistoryList.empty();
+      jqoUsageHistoryList.addClass('empty');
+      currPage = 0;
+    }
+    function addUsageHistory(item)
+    {
+      var jqoItem = $('<div>');
+      jqoItem.addClass('usage-history-item');
+      jqoItem.data('item', item);
+
+      var html =  '';
+      html += '<div class="w_p20 bg_light_color">';
+      html +=  '<div class="wrap_detail_pay">';
+      html +=   '<ul style="padding-top:18px;">';
+      html +=    '<li class="pickup_date date"><span></span><div class="delete"><img src="/dev/jcar/static/plus/image/history_delete.png"></div></li>';
+      html +=    '<li class="pickup_location"><div class="tit">호출장소</div><div class="content"></div></li>';
+      html +=    '<li class="return_location line"><div class="tit">반납장소</div><div class="content"></div></li>';
+      html +=    '<li class="pickup_time" style="padding-top:12px;"><div class="tit">예약시간</div><div class="content"></div></li>';
+      html +=    '<li class="reserve_detail line"><div class="tit">예약내용</div><div class="content"></div></li>';
+      html +=    '<li class="creditcard" style="padding-top:12px;padding-bottom:6px;"><div class="tit">결제카드</div><div class="content">[삼성] 3777-2154-****-****</div></li>';
+      html +=   '</ul>';
+      html +=  '</div>';
+      html += '</div>';
+      html += '<div class="paynum">';
+      html += '<div class="tit">결제요금</div><div class="num"><span class="bignum">5,000</span>원</div>';
+      html += '</div>';
+      jqoItem.html(html);
+
+      var dtPickup = new Date(item.pickup_time*1000);
+      $('li.pickup_date span', jqoItem).text(dtPickup.format('Y.m.d'));
+      $('li.pickup_location .content', jqoItem).text(item.pickup_addr);
+      $('li.return_location .content', jqoItem).text(item.return_addr);
+      $('li.pickup_time .content', jqoItem).text(dtPickup.format('H:i'));
+      var reserve_detail = '';
+      reserve_detail += item.is_fast_charging?'급속충전('+item.car.charger.fast+')':'완속충전('+item.car.charger.slow+')';
+      switch(item.washing)
+      {
+      case 0:
+        reserve_detail += ' / 세차 선택안함';
+        break;
+      case 1:
+        reserve_detail += ' / 기본세차';
+        break;
+      case 2:
+        reserve_detail += ' / 고급세차';
+        break;
+      default:
+        reserve_detail += ' / unknwon('+item.washing+')';
+        break;
+      }
+      $('li.reserve_detail .content', jqoItem).text(reserve_detail);
+      $('li.creditcard .content', jqoItem).text('['+item.paycard.brand+'] '+item.paycard.number);
+      var net_price = 0;
+      for(var i=0; i<item.bills.length;i++)
+      {
+        var bill = item.bills[i];
+        if(bill.canceled) { continue; }
+        var detail = bill.detail;
+        net_price += detail.net_price;
+      }
+      $('.paynum .bignum', jqoItem).text(commonUtil.insertComma(net_price));
+
+      $('.paynum', jqoItem).click(function() {
+        var item = $(this).parentsUntil(jqoUsageHistoryList, '.usage-history-item').data('item');
+        JecarPlusPage.load('usage-history-detail', {item:item});
+      });
+      $('.delete', jqoItem).click(function() {
+        JecarPlusPopup.confirm("이용기록을 삭제 하시겠습니까? 삭제 후에는 복구 할 수 없습니다", function(is_ok) {
+          if(is_ok)
+          {
+            JecarPlusPopup.loading(function(loaded){
+              $.ajax({url:"/dev/jcar/api/deputation/charging/delete", data:{deputation:item.id}, success(response) {
+                if(response && response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+                {
+                  jqoItem.remove();
+                  loaded();
+                }
+                else
+                {
+                  JecarPlusPopup.alert("삭제에 오류가 발생했습니다.");
+                }
+              }});
+            });
+          }
+        }, {txt_cancel:'취소', txt_ok:'삭제'});
+      });
+      jqoUsageHistoryList.append(jqoItem);
+      jqoUsageHistoryList.removeClass('empty');
+    }
+    function loadMoreItems()
+    {
+      currPage++;
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url:"/dev/jcar/api/deputation/charging/list", data:{pg:currPage}, success:function(response) {
+          if(response && response.data && response.data.items)
+          {
+            for(var i=0; i<response.data.items.length; i++)
+            {
+              addUsageHistory(response.data.items[i]);
+            }
+            if(response.data.pg < response.data.last_pg)
+            {
+              $('.page-usage-history .button-more').removeClass('no-more');
+            }
+            else
+            {
+              $('.page-usage-history .button-more').addClass('no-more');
+            }
+          }
+          loaded();
+        }});
+      });
+    }
+
+    $('.page-usage-history .button-more').click(function() {
+      loadMoreItems();
+    });
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'usage-history')
+      {
+        if(oldpage == 'usage-history-detail')
+        {
+          return;
+        }
+
+        clearUsageHistory();
+        loadMoreItems();
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-usage-history'});
+
+  // page-usage-history-detail
+  deferredChain.addChain(function(deferred) {
+    var jqoPageUsageHistoryDetail = $('.page-usage-history-detail');
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'usage-history-detail')
+      {
+        var jqoItem = $('.page-usage-history-detail');
+        var item = opts.item;
+        var dtPickup = new Date(item.pickup_time*1000);
+        $('li.pickup_date span', jqoItem).text(dtPickup.format('Y.m.d'));
+        $('li.pickup_location .content', jqoItem).text(item.pickup_addr);
+        $('li.return_location .content', jqoItem).text(item.return_addr);
+        $('li.pickup_time .content', jqoItem).text(dtPickup.format('H:i'));
+        var reserve_detail = '';
+        reserve_detail += item.is_fast_charging?'급속충전('+item.car.charger.fast+')':'완속충전('+item.car.charger.slow+')';
+        switch(item.washing)
+        {
+        case 0:
+          reserve_detail += ' / 세차 선택안함';
+          break;
+        case 1:
+          reserve_detail += ' / 기본세차';
+          break;
+        case 2:
+          reserve_detail += ' / 고급세차';
+          break;
+        default:
+          reserve_detail += ' / unknwon('+item.washing+')';
+          break;
+        }
+        $('li.reserve_detail .content', jqoItem).text(reserve_detail);
+        var jqoBillDetail = $('.bill_detail', jqoItem);
+        jqoBillDetail.empty();
+        var net_price = 0;
+        for(var i=0; i<item.bills.length;i++)
+        {
+          var bill = item.bills[i];
+          if(bill.canceled) { continue; }
+          var detail = bill.detail;
+          net_price += detail.net_price;
+          var discount = 0;
+          for(var j=0; j<detail.goods.length; j++)
+          {
+            var good = detail.goods[j];
+            var jqoGood = $('<div>');
+            jqoGood.addClass('tit');
+            jqoGood.text(good.name);
+            var jqoPrice = $('<div>');
+            jqoPrice.addClass('content');
+            jqoPrice.text(commonUtil.insertComma(good.price)+'원');
+            jqoBillDetail.append([jqoGood, jqoPrice]);
+            discount += good.discount;
+          }
+          if(detail.coupon_benefit)
+          {
+            // TODO:??
+          }
+          if(detail.mileage_use)
+          {
+            // TODO:??
+          }
+          if(discount)
+          {
+            var jqoGood = $('<div>');
+            jqoGood.addClass('tit');
+            jqoGood.text('할인');
+            var jqoPrice = $('<div>');
+            jqoPrice.addClass('content');
+            jqoPrice.text(commonUtil.insertComma(discount)+'원');
+            jqoBillDetail.append([jqoGood, jqoPrice]);
+          }
+          var dtBill = new Date(item.bills[i].paid*1000);
+          $('li.bill_date .content', jqoItem).text(dtBill.format("Y.m.d H:i"));
+        }
+        $('li.creditcard .content', jqoItem).text('['+item.paycard.brand+'] '+item.paycard.number);
+        $('.paynum .bignum', jqoItem).text(commonUtil.insertComma(net_price));
+      }
+    });
+    deferred.resolve();
+  }, {desc:'page-usage-history-detail'});
+
+  // page-login
+  deferredChain.addChain(function(deferred) {
+    var jqoForm = $('.page-login form');
+    jqoForm.submit(function(e) {
+      e.preventDefault();
+
+      var data = commonUtil.serializeObject(jqoForm);
+      if(!data.id) { JecarPlusPopup.alert("이메일을 입력해주세요"); return; }
+      if(!data.pw) { JecarPlusPopup.alert("비밀번호를 입력해주세요"); return; }
+
+      if(!data.is_keep) { data.bs = '1'; }
+      JecarPlusPopup.loading(function(loaded) {
+        $.ajax({url: "/dev/jcar/api/user/login", type:'post', data:data, success:function(response) {
+          if(response && response.errCode === commonConsts.JSON_ERRCODE_SUCCESS)
+          {
+            v.loadUser(function() {
+              loaded();
+              JecarPlusPage.load('main');
+            });
+          }
+          else if(response && response.errCode == commonConsts.JSON_ERRCODE_NOTFOUND)
+          {
+            loaded();
+            JecarPlusPopup.alert("이메일 또는 비밀번호가 올바르지 않습니다");
+          }
+          else if(response && response.errCode == commonConsts.JSON_ERRCODE_ALREADY_EXIST)
+          {
+            loaded();
+            JecarPlusPopup.alert("이미 로그인 되어 있습니다", function() {
+              v.loadUser(function() {
+                JecarPlusPage.load('main');
+              });
+            });
+          }
+          else
+          {
+            JecarPlusPopup.alert("오류가 발생하였습니다");
+          }
+        }});
+      });
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'login') {
+        if(oldpage != 'find-password' && oldpage.substr(0,5) != 'join-')
+        {
+          jqoForm[0].reset();
+        }
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-login'});
+
+  // page-find-password
+  deferredChain.addChain(function(deferred) {
+    // TODO: 20180816
+    deferred.resolve();
+  }, {desc:'page-find-password'});
+
+  // page-join-terms
+  deferredChain.addChain(function(deferred) {
+    var jqoForm = $('.page-join-terms form');
+    $('input.image-check[id=check-terms-all]', jqoForm).change(function() {
+      if($(this).is(':checked'))
+      {
+        $('input.image-check:not([id=check-terms-all])', jqoForm).prop('checked', true);
+      }
+    });
+    $('input.image-check:not([id=check-terms-all])', jqoForm).change(function() {
+      if(!$(this).is(':checked'))
+      {
+        $('input.image-check[id=check-terms-all]', jqoForm).prop('checked', false);
+      }
+    });
+
+    $('.btn_login', jqoForm).click(function() {
+      var has_not_check = false;
+      $('input.image-check.required', jqoForm).each(function(i,o) {
+        if(!o.checked) { has_not_check = true; return true; }
+      });
+      if(has_not_check)
+      {
+        JecarPlusPopup.alert("약관에 동의해주시기 바랍니다");
+      }
+      else
+      {
+        JecarPlusPage.load('join-register');
+      }
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'join-terms')
+      {
+        jqoForm[0].reset();
+        if(!$('.page-join-terms').prop('loaded'))
+        {
+          JecarPlusPopup.loading(function(loaded) {
+            $.ajax({url: "/dev/jcar/api/common/terms", success:function(rst) {
+              if(rst && rst.data)
+              {
+                for(var i=0; i<rst.data.length; i++)
+                {
+                  var terms = rst.data[i];
+                  var jqoTerms = null;
+                  switch(terms.category)
+                  {
+                  case 'jecar-service': jqoTerms = $('.termscontent.terms-service > div'); break;
+                  case 'jecar-privacy': jqoTerms = $('.termscontent.terms-privacy > div'); break;
+                  case 'jecar-location': jqoTerms = $('.termscontent.terms-location > div'); break;
+                  }
+                  if(jqoTerms)
+                  {
+                    var html = $('<div>').text(terms.content).html();
+                    jqoTerms.html('<p>'+html.replace(/\n/g, "<br/>\n")+'</p>');
+                  }
+                }
+              }
+              $('.page-join-terms').prop('loaded', true);
+              loaded();
+            }});
+          });
+        }
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-join-terms'});
+
+  // page-join-register
+  deferredChain.addChain(function(deferred) {
+    var jqoForm = $('.page-join-register form');
+    var ajax_user_id_check = null;
+    $('.join-register-id input', jqoForm).change(function() {
+      if(ajax_user_id_check) { ajax_user_id_check.abort(); ajax_user_id_check = null; }
+      $('.join-register-id button', jqoForm).text('중복체크');
+    });
+    $('.join-register-id button', jqoForm).click(function() {
+      var url = "/dev/jcar/api/user/join/chkid";
+      var data = {id: $('.join-register-id input', jqoForm).val()};
+      if(!data.id) { JecarPlusPopup.alert("이메일을 입력해주세요"); return; }
+
+      if(ajax_user_id_check) { ajax_user_id_check.abort(); ajax_user_id_check = null; }
+      ajax_user_id_check = $.ajax({url:url, type:'post', data:data, success: function(rst) {
+        if(rst)
+        {
+          switch(rst.errCode)
+          {
+          case 0: // success
+            $('.join-register-id button', jqoForm).text('확인됨');
+            JecarPlusPopup.alert("사용할 수 있는 이메일입니다");
+            return;
+          case 10: // invalid
+            JecarPlusPopup.alert("올바르지 않은 이메일 형식입니다");
+            return;
+          case 21: // already exist
+            JecarPlusPopup.alert("이미 가입된 이메일입니다");
+            return;
+          }
+        }
+        JecarPlusPopup.alert("이메일 확인에 오류가 발생하였습니다");
+        return;
+      }});
+    });
+    $('.btn_login', jqoForm).click(function() {
+      var data = commonUtil.serializeObject(jqoForm);
+      if(!data.name) { JecarPlusPopup.alert("이름을 입력해주세요"); return; }
+      if(!data.id) { JecarPlusPopup.alert("이메일을 입력해주세요"); return; }
+      if($('.join-register-id button', jqoForm).text() != '확인됨') { JecarPlusPopup.alert("이메일 중복체크를 해주세요"); return; }
+      if(!data.pw) { JecarPlusPopup.alert("비밀번호를 입력해주세요"); return; }
+      if(!data.chkpw) { JecarPlusPopup.alert("비밀번호 재입력을 입력해주세요"); return; }
+      if(data.pw != data.chkpw) { JecarPlusPopup.alert("비밀번호/재입력이 일치하지 않습니다"); return; }
+      var validPwRe = "^(?\u003D.*[a\u002DzA\u002DZ])(?\u003D.*\u005Cd)(?\u003D.*[^a\u002DzA\u002DZ\u005Cd]).{8,}$";
+      if(!data.pw.match(validPwRe)) { JecarPlusPopup.alert("비밀번호는 영문, 숫자, 특수기호 포함 8자리 이상 입력하셔야 합니다."); return; }
+      if(!data.mobile_phone) { JecarPlusPopup.alert("휴대전화를 입력해주세요"); return; }
+      // TODO: 휴대전화 인증하기
+
+      $.ajax({url:jqoForm.attr('action'), type:'post', data:data, success: function(rst) {
+        if(rst && rst.errCode == 0) {
+          v.loadUser(function() {
+            JecarPlusPage.load('main');
+          });
+          return;
+        }
+        JecarPlusPopup.alert("가입에 실패하였습니다")
+      }});
+    });
+
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      if(page == 'join-register') {
+        jqoForm[0].reset();
+      }
+    });
+
+    deferred.resolve();
+  }, {desc:'page-join-register'});
+
+
+  // init page
+  deferredChain.addChain(function(deferred) {
+    JecarPlusPage.bind('load', function(page, oldpage, opts) {
+      v.closeSidebar();
+    });
+    JecarPlusPage.load('main');
+    JecarPlusMain.changeTab('evstation');
+    v.validateMap();
+
+    deferred.resolve();
+  }, {desc:'page'});
+
+  // location
+  deferredChain.addChain(function(deferred) {
+    function resolve_deferred(latlng)
+    {
+      if(!latlng) { latlng = v.initMapLatlng; }
+      setTimeout(function() { v.map.setCenter(latlng); }, 0);
+      deferred.resolve();
+    }
+    function updateCurrLatLng(latlng)
+    {
+      v.currentMarker.setPosition(latlng);
+      if(!v.currLatLng)
+      {
+        v.currentMarker.setMap(v.map);
+      }
+      v.currLatLng = [latlng.getLat(), latlng.getLng()];
+    }
+    if(navigator.geolocation)
+    {
+      if(navigator.geolocation.getCurrentPosition)
+      {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latlng = new daum.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          updateCurrLatLng(latlng);
+          resolve_deferred(latlng);
+        }, function() {
+          resolve_deferred();
+        }, {
+          timeout: 5000
+        });
+      }
+      else
+      {
+        resolve_deferred();
+      }
+      if(navigator.geolocation.watchPosition)
+      {
+        navigator.geolocation.watchPosition(function(position) {
+          var latlng = new daum.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          updateCurrLatLng(latlng);
+        });
+      }
+    }
+    else
+    {
+      resolve_deferred();
+    }
+  }, {desc:'location'});
+
+  // loaded
+  deferredChain.addChain(function(deferred) {
+    setTimeout(function() {
+      deferred.resolve();
+      $('body').removeClass('status-loading');
+      loaded();
+    }, 1000);
+  }, {desc:'loaded'});
+}); });
+
+</script>
+</body>
+</html>
